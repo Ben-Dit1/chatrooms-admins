@@ -1,8 +1,8 @@
 import { members } from "@/dummy";
 import { Fragment } from "react";
 import MemberItem from "./MemberItem";
-import CreateMemberModal from "./CreateMemberModal";
 import { useModal } from "@/hooks/useModal";
+import Modal from "../Modal/Modal";
 
 export function MemberTable() {
   const { close, isOpen, open } = useModal();
@@ -31,7 +31,7 @@ export function MemberTable() {
           </Fragment>
         ))}
       </ul>
-      {isOpen && <CreateMemberModal closeModal={close} />}
+      {isOpen && <Modal buttonText="Create" title="Title" closeModal={close} />}
     </>
   );
 }

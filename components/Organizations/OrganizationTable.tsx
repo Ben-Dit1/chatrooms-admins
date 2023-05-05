@@ -1,8 +1,8 @@
 import { organizations } from "@/dummy";
 import { Fragment } from "react";
 import OrganizationItem from "./OrganizationItem";
-import CreateOrganizationModal from "./CreateOrganizationModal";
 import { useModal } from "@/hooks/useModal";
+import Modal from "../Modal/Modal";
 
 export function OrganizationTable() {
   const { close, isOpen, open } = useModal();
@@ -28,7 +28,7 @@ export function OrganizationTable() {
           </Fragment>
         ))}
       </ul>
-      {isOpen && <CreateOrganizationModal closeModal={close} />}
+      {isOpen && <Modal buttonText="Create" title="Title" closeModal={close} />}
     </>
   );
 }

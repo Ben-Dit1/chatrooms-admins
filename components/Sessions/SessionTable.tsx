@@ -1,8 +1,8 @@
-import { sessions } from "@/dummy";
+import { organizations, sessions } from "@/dummy";
 import { Fragment } from "react";
 import SessionItem from "./SessionItem";
-import CreateSessionModal from "./CreateSessionModal";
 import { useModal } from "@/hooks/useModal";
+import Modal from "../Modal/Modal";
 
 export function SessionTable() {
   const { close, isOpen, open } = useModal();
@@ -38,7 +38,9 @@ export function SessionTable() {
           </Fragment>
         ))}
       </ul>
-      {isOpen && <CreateSessionModal closeModal={close} />}
+      {isOpen && (
+        <Modal buttonText="Create" title="Title" dropdownItems={organizations} closeModal={close} />
+      )}
     </>
   );
 }
