@@ -31,7 +31,8 @@ export const organizations = [
 ];
 
 export const members = [
-  { id: 1, address: "0xrafi", organizationId: 3 },
+  { id: 1, address: "0xrafi" },
   { id: 2, address: "0xulas" },
   { id: 3, address: "0xfarhad" },
+  { id: 4, address: "0xalim", organizationId: 3 },
 ];

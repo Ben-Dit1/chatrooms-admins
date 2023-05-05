@@ -1,10 +1,11 @@
 import { members } from "@/dummy";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import MemberItem from "./MemberItem";
 import CreateMemberModal from "./CreateMemberModal";
+import { useModal } from "@/hooks/useModal";
 
 export function MemberTable() {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { close, isOpen, open } = useModal();
   return (
     <>
       <ul className="divide-y divide-gray-300 max-w-7xl flex-1 px-10 w-full mx-auto">
@@ -15,7 +16,7 @@ export function MemberTable() {
             placeholder="Search by member"
           />
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={open}
             className="bg-orange-600 px-4 text-slate-100 rounded-md hover:bg-orange-500"
           >
             New
@@ -30,13 +31,7 @@ export function MemberTable() {
           </Fragment>
         ))}
       </ul>
-      {isModalOpen && (
-        <CreateMemberModal
-          closeModal={() => {
-            return setIsModalOpen(false);
-          }}
-        />
-      )}
+      {isOpen && <CreateMemberModal closeModal={close} />}
     </>
   );
 }

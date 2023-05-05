@@ -1,12 +1,11 @@
 import { sessions } from "@/dummy";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import SessionItem from "./SessionItem";
 import CreateSessionModal from "./CreateSessionModal";
-import Dropdown from "../Dropdown/Dropdown";
+import { useModal } from "@/hooks/useModal";
 
 export function SessionTable() {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
+  const { close, isOpen, open } = useModal();
   return (
     <>
       <ul className="divide-y divide-gray-300 max-w-7xl flex-1 px-10 mx-auto">
@@ -25,7 +24,7 @@ export function SessionTable() {
               placeholder="search by organization"
             />
             <button
-              onClick={() => setIsModalOpen(true)}
+              onClick={open}
               className="bg-orange-600 px-4 text-slate-100 rounded-md hover:bg-orange-500"
             >
               New
@@ -39,13 +38,7 @@ export function SessionTable() {
           </Fragment>
         ))}
       </ul>
-      {isModalOpen && (
-        <CreateSessionModal
-          closeModal={() => {
-            return setIsModalOpen(false);
-          }}
-        />
-      )}
+      {isOpen && <CreateSessionModal closeModal={close} />}
     </>
   );
 }

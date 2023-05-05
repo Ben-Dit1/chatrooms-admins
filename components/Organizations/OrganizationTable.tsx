@@ -1,11 +1,11 @@
 import { organizations } from "@/dummy";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import OrganizationItem from "./OrganizationItem";
 import CreateOrganizationModal from "./CreateOrganizationModal";
+import { useModal } from "@/hooks/useModal";
 
 export function OrganizationTable() {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
+  const { close, isOpen, open } = useModal();
   return (
     <>
       <ul className="divide-y divide-gray-300 max-w-7xl flex-1 px-10 w-full mx-auto">
@@ -16,7 +16,7 @@ export function OrganizationTable() {
             placeholder="search by organization"
           />
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={open}
             className="bg-orange-600 px-4 text-slate-100 rounded-md hover:bg-orange-500"
           >
             New
@@ -28,13 +28,7 @@ export function OrganizationTable() {
           </Fragment>
         ))}
       </ul>
-      {isModalOpen && (
-        <CreateOrganizationModal
-          closeModal={() => {
-            return setIsModalOpen(false);
-          }}
-        />
-      )}
+      {isOpen && <CreateOrganizationModal closeModal={close} />}
     </>
   );
 }

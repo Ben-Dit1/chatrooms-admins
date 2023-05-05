@@ -1,3 +1,4 @@
+import { PATHNAME } from "@/constants/Pathnames";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -22,7 +23,7 @@ const OrganizationItem = ({ organization }: { organization: Organization }) => {
       </div>
       <div className="flex w-full flex-none justify-center gap-x-1 sm:w-auto">
         <button
-          onClick={() => route.push("organizations/manage/" + organization.id)}
+          onClick={() => route.push(PATHNAME.manage(String(organization.id)))}
           className="px-3 py-2 bg-slate-900 text-slate-200 rounded-md hover:scale-[1.02] transition-all min-w-[75px]"
         >
           Manage
