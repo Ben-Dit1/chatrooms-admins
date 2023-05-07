@@ -1,11 +1,5 @@
-import React from "react";
-
-type Session = {
-  id: number;
-  name: string;
-  createdBy: string;
-  organizationId: number;
-};
+import { Session } from '@/constants/Types';
+import React from 'react';
 
 const SessionItem = ({ session }: { session: Session }) => {
   return (
@@ -14,7 +8,9 @@ const SessionItem = ({ session }: { session: Session }) => {
       className="flex flex-wrap flex-1 flex-col md:flex-row items-center justify-between gap-x-6 gap-y-4 px-2 py-5 sm:flex-nowrap"
     >
       <div className="md:flex md:items-center md:gap-x-4">
-        <p className="font-semibold leading-6 min-w-[120px] text-gray-900">{session.name}</p>
+        <p className="font-semibold leading-6 min-w-[120px] text-gray-900">
+          {session.name}
+        </p>
         <div className="mt-1 md:mt-0 flex items-center gap-x-2 text-sm leading-5 text-gray-500 md:border-l-2 md:pl-4">
           <p>{session.createdBy}</p>
           <svg viewBox="0 0 2 2" className="h-1 w-1 fill-current">

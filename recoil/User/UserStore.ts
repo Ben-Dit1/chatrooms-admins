@@ -1,5 +1,5 @@
-import { atom } from "recoil";
-
+import { atom } from 'recoil';
+import { Organization, Session, Member } from '../../constants/Types';
 export type UserData = {
   address: string;
   organization: string;
@@ -9,27 +9,27 @@ export type UserData = {
 };
 
 export type SearchData = {
-  organization: string;
-  session: string;
-  member: string;
+  organization: Organization | undefined;
+  session: Session | undefined;
+  member: Member | undefined;
 };
 
 export const UserAtom = atom<UserData>({
-  key: "User.Atom",
+  key: 'User.Atom',
   default: {
-    address: "",
+    address: '',
     isAdmin: false,
     isManager: false,
-    organization: "",
-    signature: "",
+    organization: '',
+    signature: '',
   },
 });
 
 export const SearchAndSelectionAtom = atom<SearchData>({
-  key: "Search.Atom",
+  key: 'Search.Atom',
   default: {
-    organization: "",
-    member: "",
-    session: "",
+    organization: undefined,
+    member: undefined,
+    session: undefined,
   },
 });

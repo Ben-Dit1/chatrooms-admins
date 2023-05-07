@@ -1,11 +1,6 @@
-import React, { SetStateAction } from "react";
-import Dropdown from "../Dropdown/Dropdown";
-
-type Organization = {
-  id: number;
-  name: string;
-  managerId?: number;
-};
+import React, { SetStateAction } from 'react';
+import Dropdown from '../Dropdown/Dropdown';
+import { Organization } from '@/constants/Types';
 
 type ModalProps = {
   closeModal: () => void;
@@ -14,7 +9,12 @@ type ModalProps = {
   dropdownItems?: Organization[];
 };
 
-const Modal = ({ closeModal, title, buttonText, dropdownItems }: ModalProps) => {
+const Modal = ({
+  closeModal,
+  title,
+  buttonText,
+  dropdownItems,
+}: ModalProps) => {
   return (
     <div
       onClick={() => {

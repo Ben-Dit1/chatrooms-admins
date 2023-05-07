@@ -1,13 +1,16 @@
-type Organization = {
-  id: number;
-  name: string;
-  managerId?: number;
-};
+import { Organization } from '@/constants/Types';
 
-export default function Dropdown({ organizations }: { organizations: Organization[] }) {
+export default function Dropdown({
+  organizations,
+}: {
+  organizations: Organization[];
+}) {
   return (
     <div>
-      <label htmlFor="location" className="block text-sm leading-2 text-gray-900">
+      <label
+        htmlFor="location"
+        className="block text-sm leading-2 text-gray-900"
+      >
         Organizations
       </label>
       <select
