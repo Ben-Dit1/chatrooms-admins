@@ -5,54 +5,26 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from 'recoil';
-import {
-  SearchAndSelectionAtom,
-  SearchData,
-  UserAtom,
-  UserData,
-} from './UserStore';
+import { SelectionAtom, SelectionData, UserAtom, UserData } from './UserStore';
 
+//getters
 export const useUserData = (): UserData => {
   return useRecoilValue(UserAtom);
 };
 
-export const useSelectionData = (): SearchData => {
-  return useRecoilValue(SearchAndSelectionAtom);
+export const useSelectionData = (): SelectionData => {
+  return useRecoilValue(SelectionAtom);
 };
-
+//setters
 export const useSetUserData = (): SetterOrUpdater<UserData> => {
   return useSetRecoilState(UserAtom);
 };
 
-export const useSetSearchAndSelection = (): SetterOrUpdater<SearchData> => {
-  return useSetRecoilState(SearchAndSelectionAtom);
+export const useSetSearchAndSelection = (): SetterOrUpdater<SelectionData> => {
+  return useSetRecoilState(SelectionAtom);
 };
 
-export const useUserInfo = () => {
-  const userData = useUserData();
-  const data = useMemo(() => {
-    return {
-      address: userData.address,
-      isSigned: Boolean(userData.signature),
-      organization: userData.organization,
-      isManager: userData.isManager,
-      isAdmin: userData.isAdmin,
-    };
-  }, [userData]);
-  return data;
-};
-
-export const useSelectionInfo = () => {
-  const selectionData = useSelectionData();
-  const data = useMemo(() => {
-    return {
-      organization: selectionData.organization,
-      session: selectionData.session,
-      members: selectionData.member,
-    };
-  }, [selectionData]);
-  return data;
-};
+//custom hooks
 
 export const useSetPermission = () => {
   const userSetter = useSetUserData();
@@ -95,7 +67,7 @@ export const useSetAddress = () => {
 export const useSetOrganization = () => {
   const selectionSetter = useSetSearchAndSelection();
   const setSelection = useCallback(
-    (id: number, name: string, manager: number) => {
+    (id: number, name: string, manager?: number) => {
       selectionSetter((prev) => ({
         ...prev,
         organization: { name, manager_id: manager, id },

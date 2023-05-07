@@ -33,7 +33,9 @@ export function OrganizationTable() {
           </Fragment>
         ))}
       </ul>
-      {isOpen && <Modal buttonText="Create" title="Title" closeModal={close} />}
+      {isOpen && (
+        <Modal buttonText="Create" title="Organization" closeModal={close} />
+      )}
     </>
   );
 }

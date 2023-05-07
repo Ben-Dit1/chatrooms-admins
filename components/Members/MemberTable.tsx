@@ -3,7 +3,6 @@ import MemberItem from './MemberItem';
 import { useModal } from '@/hooks/useModal';
 import Modal from '../Modal/Modal';
 import { useGetManagersByOrganizationId } from '@/hooks/queries/useGetManagersByOrganizationId';
-import { useSelectionInfo } from '@/recoil/User/UserStoreHooks';
 
 export function MemberTable({ id }: { id: string | string[] | undefined }) {
   const [searchParam, setSearchParam] = useState<string>('');
@@ -40,7 +39,13 @@ export function MemberTable({ id }: { id: string | string[] | undefined }) {
           </Fragment>
         ))}
       </ul>
-      {isOpen && <Modal buttonText="Create" title="Title" closeModal={close} />}
+      {isOpen && (
+        <Modal
+          buttonText="Create"
+          title="New Member address or ens"
+          closeModal={close}
+        />
+      )}
     </>
   );
 }

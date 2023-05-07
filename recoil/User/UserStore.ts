@@ -8,7 +8,7 @@ export type UserData = {
   signature: string;
 };
 
-export type SearchData = {
+export type SelectionData = {
   organization: Organization | undefined;
   session: Session | undefined;
   member: Member | undefined;
@@ -25,8 +25,8 @@ export const UserAtom = atom<UserData>({
   },
 });
 
-export const SearchAndSelectionAtom = atom<SearchData>({
-  key: 'Search.Atom',
+export const SelectionAtom = atom<SelectionData>({
+  key: 'Selection.Atom',
   default: {
     organization: undefined,
     member: undefined,

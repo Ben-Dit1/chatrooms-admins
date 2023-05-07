@@ -1,11 +1,13 @@
-import { organizations, sessions } from "@/dummy";
-import { Fragment } from "react";
-import SessionItem from "./SessionItem";
-import { useModal } from "@/hooks/useModal";
-import Modal from "../Modal/Modal";
+import { sessions } from '@/dummy';
+import { Fragment } from 'react';
+import SessionItem from './SessionItem';
+import { useModal } from '@/hooks/useModal';
+import Modal from '../Modal/Modal';
+import { useGetOrganizations } from '@/hooks/queries/useGetOrganizations';
 
 export function SessionTable() {
   const { close, isOpen, open } = useModal();
+  const { data: organizations } = useGetOrganizations('');
   return (
     <>
       <ul className="divide-y divide-gray-300 max-w-7xl flex-1 px-10 mx-auto">
@@ -39,7 +41,12 @@ export function SessionTable() {
         ))}
       </ul>
       {isOpen && (
-        <Modal buttonText="Create" title="Title" dropdownItems={organizations} closeModal={close} />
+        <Modal
+          buttonText="Create"
+          title="New Session"
+          dropdownItems={organizations?.data}
+          closeModal={close}
+        />
       )}
     </>
   );

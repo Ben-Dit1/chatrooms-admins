@@ -1,10 +1,7 @@
 import { PATHNAME } from '@/constants/Pathnames';
 import { Organization } from '@/constants/Types';
 import { useGetManagerById } from '@/hooks/queries/useGetManagerById';
-import {
-  useSetOrganization,
-  useSetSearchAndSelection,
-} from '@/recoil/User/UserStoreHooks';
+import { useSetOrganization } from '@/recoil/User/UserStoreHooks';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -31,7 +28,7 @@ const OrganizationItem = ({ organization }: { organization: Organization }) => {
             setOrganization(
               organization.id,
               organization.name,
-              organization.manager_id || 0,
+              organization.manager_id || undefined,
             );
             route.push(PATHNAME.manage(String(organization.id)));
           }}

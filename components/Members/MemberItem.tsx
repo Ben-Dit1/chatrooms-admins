@@ -1,9 +1,9 @@
 import { Member } from '@/constants/Types';
-import { useSelectionInfo } from '@/recoil/User/UserStoreHooks';
+import { useSelectionData } from '@/recoil/User/UserStoreHooks';
 import React from 'react';
 
 const MemberItem = ({ member }: { member: Member }) => {
-  const { organization } = useSelectionInfo();
+  const { organization } = useSelectionData();
 
   return (
     <li
