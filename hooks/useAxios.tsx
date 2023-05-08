@@ -98,6 +98,48 @@ const useAxios = () => {
     return newOrganization;
   };
 
+  const createManager = async (
+    address: string,
+    organizationId: number,
+    signature: string,
+  ): Promise<AxiosResponse<Member>> => {
+    const newManager = await axios.post(
+      '/manager/create',
+      {
+        address,
+        organizationId,
+      },
+      { headers: { Authorization: signature } },
+    );
+    return newManager;
+  };
+
+  const createSession = async (
+    name: string,
+    organizationId: number,
+    signature: string,
+  ): Promise<AxiosResponse<Session>> => {
+    const newSession = await axios.post(
+      '/session/create',
+      {
+        name,
+        organizationId,
+      },
+      { headers: { Authorization: signature } },
+    );
+    return newSession;
+  };
+
+  const deleteManager = async (id: number, signature: string) => {
+    const deletedManager = await axios.post(
+      '/manager/delete',
+      {
+        managerId: id,
+      },
+      { headers: { Authorization: signature } },
+    );
+  };
+
   return {
     findOrganizations,
     findManagerById,
@@ -105,6 +147,9 @@ const useAxios = () => {
     findSessions,
     updateOrganization,
     createOrganization,
+    createManager,
+    createSession,
+    deleteManager,
   };
 };
 

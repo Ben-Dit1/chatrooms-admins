@@ -3,15 +3,25 @@ import MemberItem from './MemberItem';
 import { useModal } from '@/hooks/useModal';
 import Modal from '../Modal/Modal';
 import { useGetManagersByOrganizationId } from '@/hooks/queries/useGetManagersByOrganizationId';
+import { useCreateManager } from '@/hooks/queries/useCreateManager';
 
 export function MemberTable({ id }: { id: string | string[] | undefined }) {
   const [searchParam, setSearchParam] = useState<string>('');
-  const { data: members } = useGetManagersByOrganizationId(
+  const [page, setPage] = useState<number>(0);
+
+  const { data: members, refetch } = useGetManagersByOrganizationId(
     Number(id),
     searchParam,
+    page,
   );
-
+  const { mutateAsync: createManager } = useCreateManager();
   const { close, isOpen, open } = useModal();
+
+  async function onSubmit(address: string) {
+    await createManager({ address, organizationId: Number(id) });
+    close();
+    await refetch();
+  }
   return (
     <>
       <ul className="divide-y divide-gray-300 max-w-7xl flex-1 px-10 w-full mx-auto">
@@ -35,15 +45,42 @@ export function MemberTable({ id }: { id: string | string[] | undefined }) {
         </div>
         {members?.data.map((member) => (
           <Fragment key={member.id}>
-            <MemberItem member={member} />
+            <MemberItem refetch={refetch} member={member} />
           </Fragment>
         ))}
       </ul>
+      <p
+        onClick={() => {
+          if (page != 0) {
+            setPage((prev) => prev - 1);
+          }
+        }}
+        className={`rounded-full px-2 text-center ${
+          page == 0 ? 'text-gray-400' : 'text-slate-900 cursor-pointer'
+        } bottom-5 left-10 fixed`}
+      >
+        {'<'}
+      </p>
+      <p
+        onClick={() => {
+          if (members != null && members.data.length >= 7) {
+            setPage((prev) => prev + 1);
+          }
+        }}
+        className={`${
+          members != null && members.data.length >= 7
+            ? 'text-slate-900 cursor-pointer'
+            : 'text-gray-400'
+        } rounded-full px-2 text-center fixed bottom-5 left-16`}
+      >
+        {'>'}
+      </p>
       {isOpen && (
         <Modal
           buttonText="Create"
           title="New Member address or ens"
           closeModal={close}
+          onSubmit={onSubmit}
         />
       )}
     </>

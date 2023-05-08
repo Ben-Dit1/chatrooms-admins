@@ -1,15 +1,13 @@
 import React, { SetStateAction, useState } from 'react';
 import Dropdown from '../Dropdown/Dropdown';
 import { Organization } from '@/constants/Types';
-import { useCreateOrganization } from '@/hooks/queries/useCreateOrganization';
-import { useGetOrganizations } from '@/hooks/queries/useGetOrganizations';
 
 type ModalProps = {
   closeModal: () => void;
   title: string;
   buttonText: string;
   dropdownItems?: Organization[];
-  onSubmit: (name: string) => Promise<void>;
+  onSubmit: (name: string, organizationId: number) => Promise<void>;
 };
 
 const Modal = ({
@@ -20,7 +18,7 @@ const Modal = ({
   onSubmit,
 }: ModalProps) => {
   const [input, setInput] = useState<string>('');
-
+  const [organizationId, setOrganizationId] = useState<number>(0);
   return (
     <div
       onClick={() => {
@@ -48,7 +46,7 @@ const Modal = ({
         />
         {dropdownItems && <Dropdown organizations={dropdownItems} />}
         <button
-          onClick={async () => await onSubmit(input)}
+          onClick={async () => await onSubmit(input, organizationId)}
           className="bg-orange-600 text-slate-100 px-4 py-2 rounded-md hover:bg-orange-500"
         >
           {buttonText}

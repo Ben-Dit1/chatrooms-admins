@@ -1,14 +1,31 @@
 import { Member } from '@/constants/Types';
+import { useDeleteManager } from '@/hooks/queries/useDeleteManager';
 import { useUpdateOrganizationManager } from '@/hooks/queries/useUpdateOrganization';
 import { useSelectionData } from '@/recoil/User/UserStoreHooks';
+import { AxiosResponse } from 'axios';
 import React from 'react';
+import { QueryObserverResult } from 'react-query';
 
-const MemberItem = ({ member }: { member: Member }) => {
+const MemberItem = ({
+  member,
+  refetch,
+}: {
+  member: Member;
+  refetch: () => Promise<
+    QueryObserverResult<AxiosResponse<Member[], any>, unknown>
+  >;
+}) => {
   const { organization } = useSelectionData();
   const { mutateAsync: setNewManager } = useUpdateOrganizationManager(
     organization?.id || 0,
     member.id,
   );
+  const { mutateAsync: deleteManager } = useDeleteManager();
+  async function handleDelete() {
+    await deleteManager(member.id);
+    await refetch();
+  }
+
   return (
     <li
       key={member.id}
@@ -36,7 +53,10 @@ const MemberItem = ({ member }: { member: Member }) => {
             </button>
           )}
 
-          <button className="py-2 bg-orange-600 px-4 text-slate-100 rounded-md hover:bg-orange-500">
+          <button
+            onClick={handleDelete}
+            className="py-2 bg-orange-600 px-4 text-slate-100 rounded-md hover:bg-orange-500"
+          >
             Delete
           </button>
           {/* fix above line to correspond organization.managerId */}

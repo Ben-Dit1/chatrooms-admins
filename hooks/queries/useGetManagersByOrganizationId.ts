@@ -7,10 +7,10 @@ export function useGetManagersByOrganizationId(
   page?: number,
 ) {
   const { findManagersByOrganization } = useAxios();
-  const { data } = useQuery(
+  const { data, refetch } = useQuery(
     ['getManagerById', id, search, page],
     () => findManagersByOrganization(id, search, page),
     { enabled: id != null },
   );
-  return { data };
+  return { data, refetch };
 }

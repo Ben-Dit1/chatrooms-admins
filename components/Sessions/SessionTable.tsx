@@ -4,12 +4,24 @@ import { useModal } from '@/hooks/useModal';
 import Modal from '../Modal/Modal';
 import { useGetOrganizations } from '@/hooks/queries/useGetOrganizations';
 import { useGetSessions } from '@/hooks/queries/useGetSessions';
+import { useCreateSession } from '@/hooks/queries/useCreateSession';
+import { useSelectionData } from '@/recoil/User/UserStoreHooks';
 
 export function SessionTable() {
   const { close, isOpen, open } = useModal();
   const { data: organizations } = useGetOrganizations('');
   const [searchParam, setSearchParam] = useState<string>('');
-  const { data: sessions } = useGetSessions(searchParam);
+  const [page, setPage] = useState<number>(0);
+  const { data: sessions, refetch } = useGetSessions(searchParam, page);
+  const { mutateAsync: createSession } = useCreateSession();
+  const { organization } = useSelectionData();
+  async function onSubmit(name: string) {
+    if (name) {
+      await createSession({ name, organizationId: organization?.id || 0 });
+    }
+    close();
+    await refetch();
+  }
   return (
     <>
       <ul className="divide-y divide-gray-300 max-w-7xl flex-1 px-10 mx-auto">
@@ -39,12 +51,39 @@ export function SessionTable() {
           </Fragment>
         ))}
       </ul>
+      <p
+        onClick={() => {
+          if (page != 0) {
+            setPage((prev) => prev - 1);
+          }
+        }}
+        className={`rounded-full px-2 text-center ${
+          page == 0 ? 'text-gray-400' : 'text-slate-900 cursor-pointer'
+        } bottom-5 left-10 fixed`}
+      >
+        {'<'}
+      </p>
+      <p
+        onClick={() => {
+          if (sessions != null && sessions.data.length >= 7) {
+            setPage((prev) => prev + 1);
+          }
+        }}
+        className={`${
+          sessions != null && sessions.data.length >= 7
+            ? 'text-slate-900 cursor-pointer'
+            : 'text-gray-400'
+        } rounded-full px-2 text-center fixed bottom-5 left-16`}
+      >
+        {'>'}
+      </p>
       {isOpen && (
         <Modal
           buttonText="Create"
           title="New Session"
           dropdownItems={organizations?.data}
           closeModal={close}
+          onSubmit={onSubmit}
         />
       )}
     </>
