@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import { useSignMessage } from 'wagmi';
 import { RotatingLines } from 'react-loader-spinner';
-import { useSetSignature } from '@/recoil/User/UserStoreHooks';
 import { SignatureMessage } from '@/constants/Message';
 import { useRouter } from 'next/router';
 
 const Login = () => {
-  const setSignature = useSetSignature();
   const { isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage({ message: SignatureMessage });
   const [isLoading, setIsLoading] = useState(false);
   const route = useRouter();
+
+  useEffect(() => {
+    const signature = window.localStorage.getItem('chatrooms');
+    if (signature) {
+      route.push('/organizations');
+    }
+  }, [route]);
 
   return (
     <div className="bg-slate-900 h-screen w-screen justify-center items-center flex flex-col gap-y-4 ">
@@ -27,7 +32,7 @@ const Login = () => {
             try {
               const signature = await signMessageAsync();
               setIsLoading(false);
-              setSignature(signature);
+              window.localStorage.setItem('chatrooms', signature);
               route.push('/organizations');
             } catch (err) {
               setIsLoading(false);

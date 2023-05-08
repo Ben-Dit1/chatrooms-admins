@@ -7,8 +7,8 @@ export function useGetOrganizations(search: string, page: number = 0) {
   const { findOrganizations } = useAxios();
   const { data, refetch } = useQuery(
     ['getOrganizations', search, page],
-    () => findOrganizations(search, page, signature),
-    { enabled: !isAdmin && signature.length > 0 },
+    () => findOrganizations(search, page),
+    { enabled: !isAdmin },
   );
   return { data, refetch };
 }

@@ -10,7 +10,7 @@ export function useDeleteManager() {
   const { deleteManager } = useAxios();
   const { mutateAsync } = useMutation(
     ['deleteManager', signature],
-    (id: number) => deleteManager(id, signature),
+    (id: number) => deleteManager(id),
   );
   return { mutateAsync };
 }

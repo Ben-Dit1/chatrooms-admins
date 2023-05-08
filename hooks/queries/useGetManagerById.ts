@@ -7,9 +7,9 @@ export function useGetManagerById(id?: number) {
   const { signature } = useUserData();
   const { data } = useQuery(
     ['getManagerById', id],
-    () => findManagerById(id || 0, signature),
+    () => findManagerById(id || 0),
     {
-      enabled: id != null && signature.length > 0,
+      enabled: id != null,
     },
   );
   return { data };

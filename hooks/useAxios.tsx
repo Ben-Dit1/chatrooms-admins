@@ -1,10 +1,14 @@
 import { APIROOT } from '@/config';
 import { Member, Organization, Session } from '@/constants/Types';
 import Axios, { AxiosResponse } from 'axios';
-
+import { useEffect, useState } from 'react';
+const axios = Axios.create({
+  baseURL: APIROOT,
+});
 const useAxios = () => {
-  const axios = Axios.create({
-    baseURL: APIROOT,
+  axios.interceptors.request.use(function (config) {
+    config.headers.authorization = window.localStorage.getItem('chatrooms');
+    return config;
   });
 
   //get requests
@@ -12,12 +16,8 @@ const useAxios = () => {
   const findOrganizations = async (
     search: string,
     page: number = 0,
-    signature: string,
   ): Promise<AxiosResponse<Organization[]>> => {
     const organizations = await axios.get('/organization/find', {
-      headers: {
-        Authorization: signature,
-      },
       params: { search, page },
     });
     return organizations;
@@ -26,12 +26,8 @@ const useAxios = () => {
   const findSessions = async (
     search: string,
     page: number = 0,
-    signature: string,
   ): Promise<AxiosResponse<Session[]>> => {
     const organizations = await axios.get('/session/find', {
-      headers: {
-        Authorization: signature,
-      },
       params: { search, page },
     });
     return organizations;
@@ -39,13 +35,8 @@ const useAxios = () => {
 
   const findManagerById = async (
     id: number,
-    signature: string,
   ): Promise<AxiosResponse<Member>> => {
-    const manager = await axios.get(`/manager/findById/${id}`, {
-      headers: {
-        Authorization: signature,
-      },
-    });
+    const manager = await axios.get(`/manager/findById/${id}`);
     return manager;
   };
 
@@ -68,76 +59,52 @@ const useAxios = () => {
 
   const createOrganization = async (
     name: string,
-    signature: string,
   ): Promise<AxiosResponse<Organization>> => {
-    const newOrganization = await axios.post(
-      '/organization/create',
-      {
-        name,
-      },
-      { headers: { Authorization: signature } },
-    );
+    const newOrganization = await axios.post('/organization/create', {
+      name,
+    });
     return newOrganization;
   };
 
   const updateOrganization = async (
     id: number,
-    signature: string,
     managerId?: number,
     newName?: string,
   ): Promise<AxiosResponse<Organization>> => {
-    const newOrganization = await axios.post(
-      '/organization/update',
-      {
-        id,
-        newManager: managerId,
-        newName,
-      },
-      { headers: { Authorization: signature } },
-    );
+    const newOrganization = await axios.post('/organization/update', {
+      id,
+      newManager: managerId,
+      newName,
+    });
     return newOrganization;
   };
 
   const createManager = async (
     address: string,
     organizationId: number,
-    signature: string,
   ): Promise<AxiosResponse<Member>> => {
-    const newManager = await axios.post(
-      '/manager/create',
-      {
-        address,
-        organizationId,
-      },
-      { headers: { Authorization: signature } },
-    );
+    const newManager = await axios.post('/manager/create', {
+      address,
+      organizationId,
+    });
     return newManager;
   };
 
   const createSession = async (
     name: string,
     organizationId: number,
-    signature: string,
   ): Promise<AxiosResponse<Session>> => {
-    const newSession = await axios.post(
-      '/session/create',
-      {
-        name,
-        organizationId,
-      },
-      { headers: { Authorization: signature } },
-    );
+    const newSession = await axios.post('/session/create', {
+      name,
+      organizationId,
+    });
     return newSession;
   };
 
-  const deleteManager = async (id: number, signature: string) => {
-    const deletedManager = await axios.post(
-      '/manager/delete',
-      {
-        managerId: id,
-      },
-      { headers: { Authorization: signature } },
-    );
+  const deleteManager = async (id: number) => {
+    const deletedManager = await axios.post('/manager/delete', {
+      managerId: id,
+    });
   };
 
   return {

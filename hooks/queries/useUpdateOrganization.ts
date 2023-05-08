@@ -1,17 +1,13 @@
 import { useMutation, useQuery } from 'react-query';
 import useAxios from '../useAxios';
-import {
-  useSetOrganizationManager,
-  useUserData,
-} from '../../recoil/User/UserStoreHooks';
+import { useSetOrganizationManager } from '../../recoil/User/UserStoreHooks';
 
 export function useUpdateOrganizationManager(id: number, managerId: number) {
   const setOrganization = useSetOrganizationManager();
-  const { isAdmin, signature } = useUserData();
   const { updateOrganization } = useAxios();
   const { mutateAsync } = useMutation(
     ['updateOrganization', managerId, id],
-    () => updateOrganization(id, signature, managerId),
+    () => updateOrganization(id, managerId),
     {
       onSuccess: () => {
         setOrganization(id, managerId);

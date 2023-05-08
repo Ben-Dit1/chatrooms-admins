@@ -6,12 +6,11 @@ import {
 } from '../../recoil/User/UserStoreHooks';
 
 export function useCreateManager() {
-  const { isAdmin, signature } = useUserData();
   const { createManager } = useAxios();
   const { mutateAsync } = useMutation(
-    ['createManager', signature],
+    ['createManager'],
     (params: { address: string; organizationId: number }) =>
-      createManager(params.address, params.organizationId, signature),
+      createManager(params.address, params.organizationId),
   );
   return { mutateAsync };
 }

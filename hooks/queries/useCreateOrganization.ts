@@ -9,7 +9,7 @@ export function useCreateOrganization() {
   const { isAdmin, signature } = useUserData();
   const { createOrganization } = useAxios();
   const { mutateAsync } = useMutation(['createOrganization'], (name: string) =>
-    createOrganization(name, signature),
+    createOrganization(name),
   );
   return { mutateAsync };
 }

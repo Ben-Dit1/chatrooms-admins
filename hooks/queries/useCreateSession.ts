@@ -8,7 +8,7 @@ export function useCreateSession() {
   const { mutateAsync } = useMutation(
     ['createManager', signature],
     (params: { name: string; organizationId: number }) =>
-      createSession(params.name, params.organizationId, signature),
+      createSession(params.name, params.organizationId),
   );
   return { mutateAsync };
 }

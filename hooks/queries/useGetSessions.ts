@@ -7,8 +7,8 @@ export function useGetSessions(search: string, page: number = 0) {
   const { findSessions } = useAxios();
   const { data, refetch } = useQuery(
     ['getSessions', search, page],
-    () => findSessions(search, page, signature),
-    { enabled: !isAdmin && signature.length > 0 },
+    () => findSessions(search, page),
+    { enabled: !isAdmin },
   );
   return { data, refetch };
 }
