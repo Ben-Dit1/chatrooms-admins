@@ -1,10 +1,14 @@
 import { Member } from '@/constants/Types';
+import { useUpdateOrganizationManager } from '@/hooks/queries/useUpdateOrganization';
 import { useSelectionData } from '@/recoil/User/UserStoreHooks';
 import React from 'react';
 
 const MemberItem = ({ member }: { member: Member }) => {
   const { organization } = useSelectionData();
-
+  const { mutateAsync: setNewManager } = useUpdateOrganizationManager(
+    organization?.id || 0,
+    member.id,
+  );
   return (
     <li
       key={member.id}
@@ -20,7 +24,14 @@ const MemberItem = ({ member }: { member: Member }) => {
               Manager
             </p>
           ) : (
-            <button className="py-2 bg-orange-600 px-4 text-slate-100 rounded-md hover:bg-orange-500 min-w-[150px]">
+            <button
+              onClick={() => {
+                if (organization?.id) {
+                  setNewManager();
+                }
+              }}
+              className="py-2 bg-orange-600 px-4 text-slate-100 rounded-md hover:bg-orange-500 min-w-[150px]"
+            >
               Set new manager
             </button>
           )}

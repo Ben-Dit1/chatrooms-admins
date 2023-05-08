@@ -5,12 +5,14 @@ import { useSignMessage } from 'wagmi';
 import { RotatingLines } from 'react-loader-spinner';
 import { useSetSignature } from '@/recoil/User/UserStoreHooks';
 import { SignatureMessage } from '@/constants/Message';
+import { useRouter } from 'next/router';
 
 const Login = () => {
   const setSignature = useSetSignature();
   const { isConnected } = useAccount();
   const { signMessageAsync } = useSignMessage({ message: SignatureMessage });
   const [isLoading, setIsLoading] = useState(false);
+  const route = useRouter();
 
   return (
     <div className="bg-slate-900 h-screen w-screen justify-center items-center flex flex-col gap-y-4 ">
@@ -18,15 +20,15 @@ const Login = () => {
 
       <ConnectButton showBalance={false} />
 
-      {!isLoading && isConnected && (
+      {!isLoading && isConnected ? (
         <button
           onClick={async () => {
             setIsLoading(true);
             try {
               const signature = await signMessageAsync();
-              console.log(signature);
               setIsLoading(false);
               setSignature(signature);
+              route.push('/organizations');
             } catch (err) {
               setIsLoading(false);
             }
@@ -35,7 +37,7 @@ const Login = () => {
         >
           Login
         </button>
-      )}
+      ) : null}
 
       <RotatingLines
         strokeColor="white"

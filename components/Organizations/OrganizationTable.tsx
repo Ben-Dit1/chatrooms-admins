@@ -4,11 +4,25 @@ import { useModal } from '@/hooks/useModal';
 import Modal from '../Modal/Modal';
 import { useGetOrganizations } from '@/hooks/queries/useGetOrganizations';
 import { Organization } from '@/constants/Types';
+import { useCreateOrganization } from '@/hooks/queries/useCreateOrganization';
 
 export function OrganizationTable() {
   const [searchParam, setSearchParam] = useState<string>('');
-  const { data: organizations } = useGetOrganizations(searchParam);
+  const [page, setPage] = useState(0);
+  const { data: organizations, refetch } = useGetOrganizations(
+    searchParam,
+    page,
+  );
   const { close, isOpen, open } = useModal();
+  const { mutateAsync: createOrganization } = useCreateOrganization();
+
+  async function createNewOrganization(name: string) {
+    if (name) {
+      await createOrganization(name);
+      close();
+      await refetch();
+    }
+  }
   return (
     <>
       <ul className="divide-y divide-gray-300 max-w-7xl flex-1 px-10 w-full mx-auto">
@@ -33,8 +47,39 @@ export function OrganizationTable() {
           </Fragment>
         ))}
       </ul>
+      <p
+        onClick={() => {
+          if (page != 0) {
+            setPage((prev) => prev - 1);
+          }
+        }}
+        className={`rounded-full px-2 text-center ${
+          page == 0 ? 'text-gray-400' : 'text-slate-900 cursor-pointer'
+        } bottom-5 left-10 fixed`}
+      >
+        {'<'}
+      </p>
+      <p
+        onClick={() => {
+          if (organizations != null && organizations.data.length >= 7) {
+            setPage((prev) => prev + 1);
+          }
+        }}
+        className={`${
+          organizations != null && organizations.data.length >= 7
+            ? 'text-slate-900 cursor-pointer'
+            : 'text-gray-400'
+        } rounded-full px-2 text-center fixed bottom-5 left-16`}
+      >
+        {'>'}
+      </p>
       {isOpen && (
-        <Modal buttonText="Create" title="Organization" closeModal={close} />
+        <Modal
+          buttonText="Create"
+          title="Organization"
+          onSubmit={createNewOrganization}
+          closeModal={close}
+        />
       )}
     </>
   );

@@ -13,6 +13,6 @@ export type Organization = {
 export type Session = {
   id: number;
   name: string;
-  createdBy: string;
-  organizationId: number;
+  created_by: number;
+  organization_id: number;
 };

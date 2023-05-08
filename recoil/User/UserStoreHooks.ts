@@ -77,3 +77,21 @@ export const useSetOrganization = () => {
   );
   return setSelection;
 };
+
+export const useSetOrganizationManager = () => {
+  const selectionSetter = useSetSearchAndSelection();
+  const setSelection = useCallback(
+    (id: number, manager: number) => {
+      selectionSetter((prev) => ({
+        ...prev,
+        organization: {
+          name: prev.organization?.name || '',
+          manager_id: manager,
+          id,
+        },
+      }));
+    },
+    [selectionSetter],
+  );
+  return setSelection;
+};

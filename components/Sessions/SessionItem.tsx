@@ -12,11 +12,11 @@ const SessionItem = ({ session }: { session: Session }) => {
           {session.name}
         </p>
         <div className="mt-1 md:mt-0 flex items-center gap-x-2 text-sm leading-5 text-gray-500 md:border-l-2 md:pl-4">
-          <p>{session.createdBy}</p>
+          <p>{session.created_by}</p>
           <svg viewBox="0 0 2 2" className="h-1 w-1 fill-current">
             <circle cx={1} cy={1} r={1} />
           </svg>
-          <p>{session.organizationId}</p>
+          <p>{session.organization_id}</p>
         </div>
       </div>
       <div className="flex w-full flex-none justify-center gap-x-1 sm:w-auto">

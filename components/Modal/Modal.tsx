@@ -1,12 +1,15 @@
-import React, { SetStateAction } from 'react';
+import React, { SetStateAction, useState } from 'react';
 import Dropdown from '../Dropdown/Dropdown';
 import { Organization } from '@/constants/Types';
+import { useCreateOrganization } from '@/hooks/queries/useCreateOrganization';
+import { useGetOrganizations } from '@/hooks/queries/useGetOrganizations';
 
 type ModalProps = {
   closeModal: () => void;
   title: string;
   buttonText: string;
   dropdownItems?: Organization[];
+  onSubmit: (name: string) => Promise<void>;
 };
 
 const Modal = ({
@@ -14,7 +17,10 @@ const Modal = ({
   title,
   buttonText,
   dropdownItems,
+  onSubmit,
 }: ModalProps) => {
+  const [input, setInput] = useState<string>('');
+
   return (
     <div
       onClick={() => {
@@ -35,9 +41,16 @@ const Modal = ({
           type="text"
           className="block w-1/2 px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           placeholder={title + ' Name'}
+          value={input}
+          onChange={(e) => {
+            setInput((prev) => e.target.value);
+          }}
         />
         {dropdownItems && <Dropdown organizations={dropdownItems} />}
-        <button className="bg-orange-600 text-slate-100 px-4 py-2 rounded-md hover:bg-orange-500">
+        <button
+          onClick={async () => await onSubmit(input)}
+          className="bg-orange-600 text-slate-100 px-4 py-2 rounded-md hover:bg-orange-500"
+        >
           {buttonText}
         </button>
       </div>
