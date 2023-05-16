@@ -6,7 +6,7 @@ const Manage = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  return <MemberTable id={id} />;
+  return <MemberTable organizationId={id as string} />;
 };
 
 export default Manage;

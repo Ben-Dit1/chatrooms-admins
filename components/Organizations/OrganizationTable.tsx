@@ -2,14 +2,14 @@ import { Fragment, useState } from 'react';
 import OrganizationItem from './OrganizationItem';
 import { useModal } from '@/hooks/useModal';
 import Modal from '../Modal/Modal';
-import { useGetOrganizations } from '@/hooks/queries/useGetOrganizations';
 import { Organization } from '@/constants/Types';
 import { useCreateOrganization } from '@/hooks/queries/useCreateOrganization';
+import { useGetOrganizationsBySignature } from '@/hooks/queries/useGetOrganizationsBySignature';
 
 export function OrganizationTable() {
   const [searchParam, setSearchParam] = useState<string>('');
   const [page, setPage] = useState(0);
-  const { data: organizations, refetch } = useGetOrganizations(
+  const { data: organizations, refetch } = useGetOrganizationsBySignature(
     searchParam,
     page,
   );

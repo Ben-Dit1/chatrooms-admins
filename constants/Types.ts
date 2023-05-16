@@ -1,7 +1,8 @@
 export type Member = {
   id: number;
   address: string;
-  organization_id?: number;
+  organization_id: number;
+  manages?: Organization;
 };
 
 export type Organization = {

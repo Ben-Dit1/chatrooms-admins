@@ -1,7 +1,6 @@
 import { APIROOT } from '@/config';
 import { Member, Organization, Session } from '@/constants/Types';
 import Axios, { AxiosResponse } from 'axios';
-import { useEffect, useState } from 'react';
 const axios = Axios.create({
   baseURL: APIROOT,
 });
@@ -11,27 +10,29 @@ const useAxios = () => {
     return config;
   });
 
-  //get requests
-
-  const findOrganizations = async (
-    search: string,
-    page: number = 0,
-  ): Promise<AxiosResponse<Organization[]>> => {
-    const organizations = await axios.get('/organization/find', {
-      params: { search, page },
+  const findManagersBySignature = async (
+    organizationId: string,
+  ): Promise<AxiosResponse<Member[]>> => {
+    const managerAddress = await axios.get('/manager/findBySignature', {
+      params: { organizationId },
     });
-    return organizations;
+    return managerAddress;
   };
 
-  const findSessions = async (
-    search: string,
-    page: number = 0,
-  ): Promise<AxiosResponse<Session[]>> => {
-    const organizations = await axios.get('/session/find', {
-      params: { search, page },
-    });
-    return organizations;
+  const findOrganizationById = async (
+    id: string,
+  ): Promise<AxiosResponse<Organization>> => {
+    const organization = await axios.get('/organization/findById/' + id);
+    return organization;
   };
+
+  const adminOrManager = async (): Promise<
+    AxiosResponse<{ admin: boolean; manager: boolean }>
+  > => {
+    const isAdminOrManager = await axios.get('/manager/isAdminOrManager');
+    return isAdminOrManager;
+  };
+  //get requests for managers
 
   const findManagerById = async (
     id: number,
@@ -40,19 +41,26 @@ const useAxios = () => {
     return manager;
   };
 
-  const findManagersByOrganization = async (
-    id: number,
+  //rework done!
+  const findSessionsBySignature = async (
     search: string,
-    page: number = 0,
-  ): Promise<AxiosResponse<Member[]>> => {
-    const managers = await axios.get('/manager/findByOrganization', {
-      params: {
-        organizationId: id,
-        search,
-        page,
-      },
+    page = 0,
+  ): Promise<AxiosResponse<Session[]>> => {
+    const sessions = await axios.get('session/findBySignature', {
+      params: { search, page },
     });
-    return managers;
+    return sessions;
+  };
+
+  const findOrganizationsBySignature = async (
+    search: string,
+    page = 0,
+    noPaginated: boolean,
+  ): Promise<AxiosResponse<Organization[]>> => {
+    const organizations = await axios.get('organization/findBySignature', {
+      params: { search, page },
+    });
+    return organizations;
   };
 
   //post requests
@@ -108,15 +116,17 @@ const useAxios = () => {
   };
 
   return {
-    findOrganizations,
     findManagerById,
-    findManagersByOrganization,
-    findSessions,
+    findManagersBySignature,
     updateOrganization,
     createOrganization,
     createManager,
     createSession,
     deleteManager,
+    findSessionsBySignature,
+    findOrganizationsBySignature,
+    adminOrManager,
+    findOrganizationById,
   };
 };
 

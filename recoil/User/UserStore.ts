@@ -5,13 +5,6 @@ export type UserData = {
   organization: string;
   isManager: boolean;
   isAdmin: boolean;
-  signature: string;
-};
-
-export type SelectionData = {
-  organization: Organization | undefined;
-  session: Session | undefined;
-  member: Member | undefined;
 };
 
 export const UserAtom = atom<UserData>({
@@ -21,15 +14,5 @@ export const UserAtom = atom<UserData>({
     isAdmin: false,
     isManager: false,
     organization: '',
-    signature: '',
-  },
-});
-
-export const SelectionAtom = atom<SelectionData>({
-  key: 'Selection.Atom',
-  default: {
-    organization: undefined,
-    member: undefined,
-    session: undefined,
   },
 });

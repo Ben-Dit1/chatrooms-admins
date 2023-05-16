@@ -44,7 +44,12 @@ const Modal = ({
             setInput((prev) => e.target.value);
           }}
         />
-        {dropdownItems && <Dropdown organizations={dropdownItems} />}
+        {dropdownItems && (
+          <Dropdown
+            organizations={dropdownItems}
+            setOrganizationId={setOrganizationId}
+          />
+        )}
         <button
           onClick={async () => await onSubmit(input, organizationId)}
           className="bg-orange-600 text-slate-100 px-4 py-2 rounded-md hover:bg-orange-500"

@@ -1,38 +1,28 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import MemberItem from './MemberItem';
 import { useModal } from '@/hooks/useModal';
 import Modal from '../Modal/Modal';
-import { useGetManagersByOrganizationId } from '@/hooks/queries/useGetManagersByOrganizationId';
 import { useCreateManager } from '@/hooks/queries/useCreateManager';
+import { useGetManagersBySignature } from '@/hooks/queries/useGetManagersBySignature';
 
-export function MemberTable({ id }: { id: string | string[] | undefined }) {
-  const [searchParam, setSearchParam] = useState<string>('');
-  const [page, setPage] = useState<number>(0);
-
-  const { data: members, refetch } = useGetManagersByOrganizationId(
-    Number(id),
-    searchParam,
-    page,
-  );
+export function MemberTable({ organizationId }: { organizationId: string }) {
   const { mutateAsync: createManager } = useCreateManager();
   const { close, isOpen, open } = useModal();
+  const { data: members, refetch } = useGetManagersBySignature(organizationId);
 
   async function onSubmit(address: string) {
-    await createManager({ address, organizationId: Number(id) });
+    await createManager({
+      address,
+      organizationId: Number(organizationId),
+    });
     close();
     await refetch();
   }
+
   return (
     <>
       <ul className="divide-y divide-gray-300 max-w-7xl flex-1 px-10 w-full mx-auto">
         <div className="my-2 flex gap-x-2">
-          <input
-            type="text"
-            className="block w-[200px] px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            placeholder="Search by member"
-            value={searchParam}
-            onChange={(e) => setSearchParam(e.target.value)}
-          />
           <button
             onClick={open}
             className="bg-orange-600 px-4 text-slate-100 rounded-md hover:bg-orange-500"
@@ -49,32 +39,7 @@ export function MemberTable({ id }: { id: string | string[] | undefined }) {
           </Fragment>
         ))}
       </ul>
-      <p
-        onClick={() => {
-          if (page != 0) {
-            setPage((prev) => prev - 1);
-          }
-        }}
-        className={`rounded-full px-2 text-center ${
-          page == 0 ? 'text-gray-400' : 'text-slate-900 cursor-pointer'
-        } bottom-5 left-10 fixed`}
-      >
-        {'<'}
-      </p>
-      <p
-        onClick={() => {
-          if (members != null && members.data.length >= 7) {
-            setPage((prev) => prev + 1);
-          }
-        }}
-        className={`${
-          members != null && members.data.length >= 7
-            ? 'text-slate-900 cursor-pointer'
-            : 'text-gray-400'
-        } rounded-full px-2 text-center fixed bottom-5 left-16`}
-      >
-        {'>'}
-      </p>
+
       {isOpen && (
         <Modal
           buttonText="Create"

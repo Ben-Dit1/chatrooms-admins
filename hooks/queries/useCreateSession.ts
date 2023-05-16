@@ -1,12 +1,10 @@
 import { useMutation } from 'react-query';
 import useAxios from '../useAxios';
-import { useUserData } from '../../recoil/User/UserStoreHooks';
 
 export function useCreateSession() {
-  const { isAdmin, signature } = useUserData();
   const { createSession } = useAxios();
   const { mutateAsync } = useMutation(
-    ['createManager', signature],
+    ['createManager'],
     (params: { name: string; organizationId: number }) =>
       createSession(params.name, params.organizationId),
   );

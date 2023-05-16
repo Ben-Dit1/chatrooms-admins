@@ -2,22 +2,23 @@ import { Fragment, useState } from 'react';
 import SessionItem from './SessionItem';
 import { useModal } from '@/hooks/useModal';
 import Modal from '../Modal/Modal';
-import { useGetOrganizations } from '@/hooks/queries/useGetOrganizations';
-import { useGetSessions } from '@/hooks/queries/useGetSessions';
 import { useCreateSession } from '@/hooks/queries/useCreateSession';
-import { useSelectionData } from '@/recoil/User/UserStoreHooks';
+import { useGetSessionsBySignature } from '@/hooks/queries/useGetSessionsBySignature';
+import { useGetOrganizationsBySignature } from '@/hooks/queries/useGetOrganizationsBySignature';
 
 export function SessionTable() {
   const { close, isOpen, open } = useModal();
-  const { data: organizations } = useGetOrganizations('');
+  const { data: organizations } = useGetOrganizationsBySignature('', 0, true);
   const [searchParam, setSearchParam] = useState<string>('');
   const [page, setPage] = useState<number>(0);
-  const { data: sessions, refetch } = useGetSessions(searchParam, page);
+  const { data: sessions, refetch } = useGetSessionsBySignature(
+    searchParam,
+    page,
+  );
   const { mutateAsync: createSession } = useCreateSession();
-  const { organization } = useSelectionData();
-  async function onSubmit(name: string) {
+  async function onSubmit(name: string, organizationId: number) {
     if (name) {
-      await createSession({ name, organizationId: organization?.id || 0 });
+      await createSession({ name, organizationId });
     }
     close();
     await refetch();

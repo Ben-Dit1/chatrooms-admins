@@ -1,18 +1,18 @@
 import { Organization } from '@/constants/Types';
-import { useSetOrganization } from '@/recoil/User/UserStoreHooks';
 import { useEffect } from 'react';
 
 export default function Dropdown({
   organizations,
+  setOrganizationId,
 }: {
   organizations: Organization[];
+  setOrganizationId: (num: number) => void;
 }) {
-  const setOrganization = useSetOrganization();
   useEffect(() => {
     if (organizations.length > 0) {
-      setOrganization(organizations[0].id, organizations[0].name);
+      setOrganizationId(organizations[0].id);
     }
-  }, [organizations, setOrganization]);
+  }, [organizations, setOrganizationId]);
   return (
     <div>
       <label
@@ -24,7 +24,7 @@ export default function Dropdown({
       <select
         className="block w-full rounded-md -mt-4 border-0 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
         defaultValue={organizations.length > 0 ? organizations[0].id : 0}
-        onChange={(e) => setOrganization(Number(e.target.value), '')}
+        onChange={(e) => setOrganizationId(Number(e.target.value))}
       >
         {organizations.map((organization) => {
           return (
