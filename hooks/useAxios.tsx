@@ -55,10 +55,10 @@ const useAxios = () => {
   const findOrganizationsBySignature = async (
     search: string,
     page = 0,
-    noPaginated: boolean,
+    noPaginated: string,
   ): Promise<AxiosResponse<Organization[]>> => {
     const organizations = await axios.get('organization/findBySignature', {
-      params: { search, page },
+      params: { search, page, noPaginated },
     });
     return organizations;
   };

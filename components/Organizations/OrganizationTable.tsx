@@ -12,6 +12,7 @@ export function OrganizationTable() {
   const { data: organizations, refetch } = useGetOrganizationsBySignature(
     searchParam,
     page,
+    'false',
   );
   const { close, isOpen, open } = useModal();
   const { mutateAsync: createOrganization } = useCreateOrganization();

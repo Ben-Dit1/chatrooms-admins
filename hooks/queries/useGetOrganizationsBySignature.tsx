@@ -4,7 +4,7 @@ import useAxios from '../useAxios';
 export function useGetOrganizationsBySignature(
   search = '',
   page = 0,
-  noPaginated = false,
+  noPaginated = 'false',
 ) {
   const { findOrganizationsBySignature } = useAxios();
   const { data, refetch } = useQuery(

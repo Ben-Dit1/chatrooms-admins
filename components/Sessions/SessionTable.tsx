@@ -8,7 +8,7 @@ import { useGetOrganizationsBySignature } from '@/hooks/queries/useGetOrganizati
 
 export function SessionTable() {
   const { close, isOpen, open } = useModal();
-  const { data: organizations } = useGetOrganizationsBySignature('', 0, true);
+  const { data: organizations } = useGetOrganizationsBySignature('', 0, 'true');
   const [searchParam, setSearchParam] = useState<string>('');
   const [page, setPage] = useState<number>(0);
   const { data: sessions, refetch } = useGetSessionsBySignature(
