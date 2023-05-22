@@ -1,11 +1,14 @@
 import { Session } from '@/constants/Types';
 import { useGetOrganizationById } from '@/hooks/queries/useGetOrganizationById';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 const SessionItem = ({ session }: { session: Session }) => {
   const { data: organization } = useGetOrganizationById(
     String(session.organization_id),
   );
+  const router = useRouter();
+
   return (
     <li
       key={session.id}
@@ -21,7 +24,10 @@ const SessionItem = ({ session }: { session: Session }) => {
         </div>
       </div>
       <div className="flex w-full flex-none justify-center gap-x-1 sm:w-auto">
-        <button className="px-3 py-2 bg-slate-900 text-slate-200 rounded-md hover:scale-[1.02] transition-all min-w-[75px]">
+        <button
+          onClick={() => router.push('/sessions/key/' + session.id)}
+          className="px-3 py-2 bg-slate-900 text-slate-200 rounded-md hover:scale-[1.02] transition-all min-w-[75px]"
+        >
           Start
         </button>
       </div>

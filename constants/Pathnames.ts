@@ -3,4 +3,5 @@ export const PATHNAME = {
   sessions: '/sessions',
   login: '/login',
   manage: (id: string) => '/organizations/manage/' + id,
+  qr: '/sessions/key/',
 };

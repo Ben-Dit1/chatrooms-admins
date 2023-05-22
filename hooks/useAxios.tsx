@@ -1,5 +1,5 @@
 import { APIROOT } from '@/config';
-import { Member, Organization, Session } from '@/constants/Types';
+import { Key, Member, Organization, Session } from '@/constants/Types';
 import Axios, { AxiosResponse } from 'axios';
 const axios = Axios.create({
   baseURL: APIROOT,
@@ -115,8 +115,16 @@ const useAxios = () => {
     });
   };
 
+  const createKey = async (sessionId: string): Promise<AxiosResponse<Key>> => {
+    const createKey = await axios.post('/key/generate', {
+      sessionId: Number(sessionId),
+    });
+    return createKey;
+  };
+
   return {
     findManagerById,
+    createKey,
     findManagersBySignature,
     updateOrganization,
     createOrganization,

@@ -17,3 +17,15 @@ export type Session = {
   created_by: number;
   organization_id: number;
 };
+
+export type Key = {
+  id: number;
+
+  key: string;
+
+  created_at: Date;
+
+  generated_by: number;
+
+  session_id: number;
+};
