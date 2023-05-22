@@ -4,6 +4,7 @@ import { useModal } from '@/hooks/useModal';
 import Modal from '../Modal/Modal';
 import { useCreateManager } from '@/hooks/queries/useCreateManager';
 import { useGetManagersBySignature } from '@/hooks/queries/useGetManagersBySignature';
+import { error } from '@/hooks/useToastify';
 
 export function MemberTable({ organizationId }: { organizationId: string }) {
   const { mutateAsync: createManager } = useCreateManager();
@@ -11,12 +12,16 @@ export function MemberTable({ organizationId }: { organizationId: string }) {
   const { data: members, refetch } = useGetManagersBySignature(organizationId);
 
   async function onSubmit(address: string) {
-    await createManager({
-      address,
-      organizationId: Number(organizationId),
-    });
-    close();
-    await refetch();
+    try {
+      await createManager({
+        address,
+        organizationId: Number(organizationId),
+      });
+      close();
+      await refetch();
+    } catch (err: any) {
+      error(err.response.data.message);
+    }
   }
 
   return (

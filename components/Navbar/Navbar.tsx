@@ -5,8 +5,10 @@ export function Navbar() {
   const route = useRouter();
   const pathname = usePathname();
 
-  if (pathname == PATHNAME.login || pathname.startsWith(PATHNAME.qr)) {
-    return null;
+  if (pathname) {
+    if (pathname == PATHNAME.login || pathname.startsWith(PATHNAME.qr)) {
+      return null;
+    }
   }
 
   return (

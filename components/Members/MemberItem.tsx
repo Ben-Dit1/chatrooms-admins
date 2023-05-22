@@ -2,6 +2,7 @@ import { Member } from '@/constants/Types';
 import { useDeleteManager } from '@/hooks/queries/useDeleteManager';
 import { useAdminOrManager } from '@/hooks/queries/useGetAdminOrManager';
 import { useUpdateOrganizationManager } from '@/hooks/queries/useUpdateOrganization';
+import { error } from '@/hooks/useToastify';
 import { AxiosResponse } from 'axios';
 import React from 'react';
 import { QueryObserverResult } from 'react-query';
@@ -22,8 +23,21 @@ const MemberItem = ({
     member.id,
   );
   async function handleDelete() {
-    await deleteManager(member.id);
-    await refetch();
+    try {
+      await deleteManager(member.id);
+      await refetch();
+    } catch (err: any) {
+      error(err.response.data.message);
+    }
+  }
+
+  async function handleNewManager() {
+    try {
+      await setNewManager();
+      await refetch();
+    } catch (err: any) {
+      error(err.response.data.message);
+    }
   }
   const { data: isAdminOrManager } = useAdminOrManager();
   return (
@@ -43,10 +57,7 @@ const MemberItem = ({
           ) : null}
           {isAdminOrManager?.data.admin && !member.manages ? (
             <button
-              onClick={async () => {
-                await setNewManager();
-                await refetch();
-              }}
+              onClick={handleNewManager}
               className="py-2 bg-green-600 px-4 text-slate-100 rounded-md hover:bg-green-500"
             >
               Set New Manager

@@ -5,6 +5,7 @@ import Modal from '../Modal/Modal';
 import { Organization } from '@/constants/Types';
 import { useCreateOrganization } from '@/hooks/queries/useCreateOrganization';
 import { useGetOrganizationsBySignature } from '@/hooks/queries/useGetOrganizationsBySignature';
+import { error } from '@/hooks/useToastify';
 
 export function OrganizationTable() {
   const [searchParam, setSearchParam] = useState<string>('');
@@ -18,10 +19,14 @@ export function OrganizationTable() {
   const { mutateAsync: createOrganization } = useCreateOrganization();
 
   async function createNewOrganization(name: string) {
-    if (name) {
-      await createOrganization(name);
-      close();
-      await refetch();
+    try {
+      if (name) {
+        await createOrganization(name);
+        close();
+        await refetch();
+      }
+    } catch (err: any) {
+      error(err.response.data.message);
     }
   }
   return (

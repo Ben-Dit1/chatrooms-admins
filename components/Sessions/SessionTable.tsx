@@ -5,6 +5,7 @@ import Modal from '../Modal/Modal';
 import { useCreateSession } from '@/hooks/queries/useCreateSession';
 import { useGetSessionsBySignature } from '@/hooks/queries/useGetSessionsBySignature';
 import { useGetOrganizationsBySignature } from '@/hooks/queries/useGetOrganizationsBySignature';
+import { error } from '@/hooks/useToastify';
 
 export function SessionTable() {
   const { close, isOpen, open } = useModal();
@@ -17,11 +18,15 @@ export function SessionTable() {
   );
   const { mutateAsync: createSession } = useCreateSession();
   async function onSubmit(name: string, organizationId: number) {
-    if (name) {
-      await createSession({ name, organizationId });
+    try {
+      if (name) {
+        await createSession({ name, organizationId });
+      }
+      close();
+      await refetch();
+    } catch (err: any) {
+      error(err.response.data.message);
     }
-    close();
-    await refetch();
   }
   return (
     <>

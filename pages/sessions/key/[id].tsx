@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
 import Router, { useRouter } from 'next/router';
 import { useCreateKey } from '@/hooks/queries/useCreateKey';
+import { error } from '@/hooks/useToastify';
 
 export default function Qr() {
   const [link, setLink] = useState<string>('');
@@ -16,8 +17,8 @@ export default function Qr() {
         if (err) return console.log(err);
         setLink(url);
       });
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      error(e.response.data.message);
       Router.push('/organizations');
     }
   }
