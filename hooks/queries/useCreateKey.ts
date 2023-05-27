@@ -8,7 +8,7 @@ export function useCreateKey() {
     ['createKey'],
     (sessionId: string) => createKey(sessionId),
     {
-      onSuccess: () => success(),
+      onSuccess: () => console.log('success'),
     },
   );
   return { mutateAsync };
