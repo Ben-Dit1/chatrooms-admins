@@ -4,6 +4,7 @@ import QRCode from 'qrcode';
 import Router, { useRouter } from 'next/router';
 import { useCreateKey } from '@/hooks/queries/useCreateKey';
 import { error } from '@/hooks/useToastify';
+import { APP_AUTH_ROOT } from '@/config';
 
 export default function Qr() {
   const [link, setLink] = useState<string>('');
@@ -13,7 +14,7 @@ export default function Qr() {
   async function generateQr() {
     try {
       const { data } = await mutateAsync(id as string);
-      QRCode.toDataURL('localhost:3000/yoyo/' + data.key, (err, url) => {
+      QRCode.toDataURL(APP_AUTH_ROOT + '/' + data.key, (err, url) => {
         if (err) return console.log(err);
         setLink(url);
       });
