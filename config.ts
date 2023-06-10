@@ -1,2 +1,2 @@
-export const APIROOT = 'http://localhost:8000';
-export const APP_AUTH_ROOT = 'http://localhost:3000/auth';
+export const APIROOT = 'https://chatrooms-api.ethylene.io';
+export const APP_AUTH_ROOT = 'https://chatrooms-app.vercel.app/auth';
