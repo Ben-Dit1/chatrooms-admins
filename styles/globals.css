@@ -1,10 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+:root {
+  --font-poppins: 'Poppins', sans-serif;
+}
 body,
 * {
   margin: 0;
+  font-family: var(--font-poppins);
   padding: 0;
   position: relative;
+}
+
+.linear-card {
+  background: linear-gradient(
+    90deg,
+    rgba(23, 27, 40, 1) 0%,
+    rgba(24, 30, 45, 1) 50%
+  );
+}
+
+.bg {
+  background: linear-gradient(
+    90deg,
+    rgba(12, 14, 21, 1) 0%,
+    rgba(22, 29, 44, 1) 50%
+  );
 }
