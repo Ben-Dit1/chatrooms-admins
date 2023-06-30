@@ -1,6 +1,6 @@
 import { PATHNAME } from '@/constants/Pathnames';
 import { useRouter, usePathname } from 'next/navigation';
-
+import { HiOutlineLogout } from 'react-icons/hi';
 export function Navbar() {
   const route = useRouter();
   const pathname = usePathname();
@@ -12,7 +12,7 @@ export function Navbar() {
   }
 
   return (
-    <div className="bg-slate-900 h-[80px] flex justify-start items-center text-slate-200 gap-x-2 sm:gap-x-8 px-2 md:px-8">
+    <div className="bg-slate-900 h-[80px] flex justify-start relative items-center text-slate-200 gap-x-2 sm:gap-x-8 px-2 md:px-8">
       <h1 className="text-lg md:text-2xl mr-2 sm:mr-8 hover:cursor-pointer tracking-wider">
         chatrooms.
       </h1>
@@ -31,6 +31,15 @@ export function Navbar() {
         }`}
       >
         Sessions
+      </p>
+      <p className="right-8 absolute hover:cursor-pointer">
+        <HiOutlineLogout
+          onClick={() => {
+            window.localStorage.removeItem('chatrooms');
+            route.push('/login');
+          }}
+          size={26}
+        />
       </p>
     </div>
   );
