@@ -1,6 +1,7 @@
 import React, { SetStateAction, useState } from 'react';
 import Dropdown from '../Dropdown/Dropdown';
 import { Organization } from '@/constants/Types';
+import { SESSION_LIMIT } from '@/config';
 
 type ModalProps = {
   closeModal: () => void;
@@ -41,7 +42,11 @@ const Modal = ({
           placeholder={title + ' Name'}
           value={input}
           onChange={(e) => {
-            setInput((prev) => e.target.value);
+            if (e.target.value.length < SESSION_LIMIT) {
+              setInput((prev) => e.target.value);
+            } else {
+              setInput((prev) => e.target.value.slice(0, SESSION_LIMIT));
+            }
           }}
         />
         {dropdownItems && (
