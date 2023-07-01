@@ -3,12 +3,12 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import { useSignMessage } from 'wagmi';
 import { RotatingLines } from 'react-loader-spinner';
-import { SignatureMessage } from '@/constants/Message';
 import { useRouter } from 'next/router';
+import { MESSAGE } from '@/config';
 
 const Login = () => {
   const { isConnected } = useAccount();
-  const { signMessageAsync } = useSignMessage({ message: SignatureMessage });
+  const { signMessageAsync } = useSignMessage({ message: MESSAGE });
   const [isLoading, setIsLoading] = useState(false);
   const route = useRouter();
 
