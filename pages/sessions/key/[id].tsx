@@ -67,21 +67,22 @@ export default function Qr() {
                 <Image
                   src={ethyleneBig.src}
                   alt="ethyleneBig"
-                  width={110}
-                  height={50}
+                  width={100}
+                  height={30}
                 />
                 <Image
                   src={doingudBig.src}
                   alt="doingudBig"
                   width={70}
                   height={30}
+                  style={{ transform: 'translateY(-3px)' }}
                 />
               </div>
             </div>
             <div className="flex flex-col space-y-1 items-center">
               <p className="text-xs font-light">Powered by</p>
               <div className="flex items-center">
-                <Image alt="" src={orbisBig.src} width={70} height={30} />
+                <Image alt="orbis" src={orbisBig.src} width={70} height={30} />
               </div>
             </div>
           </div>
