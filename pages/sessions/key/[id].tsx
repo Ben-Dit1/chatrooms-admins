@@ -10,13 +10,14 @@ import chatroomsLogo from '@/public/assets/chatroomsLogo.svg';
 import ethyleneBig from '@/public/assets/ethyleneBig.png';
 import doingudBig from '@/public/assets/doingudBig.png';
 import orbisBig from '@/public/assets/orbisBig.png';
+import useWindowSize from '@/hooks/useWindowSize';
 
 export default function Qr() {
   const [link, setLink] = useState<string>('');
   const router = useRouter();
   let preSig: string;
   let { id } = router.query;
-
+  const [w, h] = useWindowSize();
   const { mutateAsync } = useCreateKey();
   async function generateQr() {
     if (typeof id == 'string' && id.includes('-')) {
@@ -46,17 +47,91 @@ export default function Qr() {
     if (id) generateQr();
     return () => clearInterval(interval);
   }, [id]);
+  if (h > w) {
+    return (
+      <>
+        <div className="bg w-full p-4 space-x-0 space-y-4 h-screen overflow-hidden min-h-fullscreen flex-col flex items-center justify-center z-10">
+          <img
+            className="w-auto h-[40%] rounded-3xl drop-shadow-xl shadow-sm shadow-gray-800"
+            src={link}
+            alt="qrToMint"
+          />
 
+          <div className="w-auto min-w-[80%] h-[50%] space-y-2 border-[#283040] border-4 rounded-3xl linear-card flex flex-col justify-between items-center text-white p-4">
+            <Image
+              alt="chatroomsLogo"
+              src={chatroomsLogo.src}
+              width={200}
+              height={250}
+              style={{ marginBottom: '2px' }}
+            />
+            <div className="flex flex-col text-center justify-center items-center space-y-1">
+              <p className="text-xl font-medium">Engage with speakers</p>
+              <p className="font-medium text-sm">by asking and upvoting</p>
+            </div>
+            <div className="p-2 rounded-lg border-[1px] border-white text-center">
+              <p className="text-sm">+100$ USDC GIVEAWAY* 🎉</p>
+            </div>
+            <div className="flex items-center justify-between w-[98%]">
+              <div className="flex flex-col space-y-1 items-start">
+                <p className="text-[0.5rem] font-light">Developed by</p>
+                <div className="flex items-center space-x-2 justify-start">
+                  <Image
+                    src={ethyleneBig.src}
+                    alt="ethyleneBig"
+                    width={80}
+                    height={30}
+                  />
+                  <Image
+                    src={doingudBig.src}
+                    alt="doingudBig"
+                    width={50}
+                    height={30}
+                    style={{ transform: 'translateY(-1px)' }}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col space-y-1 items-center">
+                <p className="text-[0.5rem] font-light">Powered by</p>
+                <div className="flex items-center">
+                  <Image
+                    alt="orbis"
+                    src={orbisBig.src}
+                    width={50}
+                    height={30}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          {!id?.includes('-') && (
+            <button
+              className=" border-[1px] border-white text-sm p-2 rounded-lg absolute top-4 right-4 text-white"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `${ADMIN_ROOT}/sessions/key/${id}-${window.localStorage.getItem(
+                    'chatrooms',
+                  )}`,
+                );
+              }}
+            >
+              Get Permalink
+            </button>
+          )}
+        </div>
+      </>
+    );
+  }
   return (
     <>
-      <div className="bg w-full space-x-0 space-y-4 md:space-x-10 md:space-y-0 h-screen min-h-fullscreen flex-col md:flex-row flex items-center justify-center z-10">
+      <div className="bg w-full p-4 space-x-0 space-y-4 md:space-x-10 md:space-y-0 h-screen min-h-fullscreen flex-col md:flex-row flex items-center justify-center z-10">
         <img
-          className="w-[40%] lg:w-[26%] rounded-3xl drop-shadow-xl shadow-sm shadow-gray-800"
+          className="w-[50%] lg:w-[26%] rounded-3xl drop-shadow-xl shadow-sm shadow-gray-800"
           src={link}
           alt="qrToMint"
         />
 
-        <div className="w-[56%] lg:w-[30%] min-h-[50%] border-[#283040] border-4 rounded-3xl linear-card flex flex-col justify-between items-center text-white py-8 px-6">
+        <div className="w-[70%] lg:w-[30%] min-h-[50%] border-[#283040] border-4 rounded-3xl linear-card flex flex-col justify-between items-center text-white py-8 px-6">
           <Image
             alt="chatroomsLogo"
             src={chatroomsLogo.src}
