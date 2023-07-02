@@ -83,7 +83,7 @@ export default function Qr() {
                 <p className="text-[0.5rem] lg:text-[2rem] font-light">
                   Developed by
                 </p>
-                <div className="flex items-center space-x-2 justify-start">
+                <div className="flex items-center space-x-2 lg:space-x-4 justify-start">
                   <Image
                     src={ethyleneBig.src}
                     alt="ethyleneBig"
@@ -95,7 +95,7 @@ export default function Qr() {
                     alt="doingudBig"
                     width={200}
                     height={60}
-                    style={{ transform: 'translateY(-1px)' }}
+                    style={{ transform: 'translateY(-2px)' }}
                   />
                 </div>
               </div>
