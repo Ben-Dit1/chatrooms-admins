@@ -87,14 +87,14 @@ export default function Qr() {
                   <Image
                     src={ethyleneBig.src}
                     alt="ethyleneBig"
-                    width={150}
-                    height={30}
+                    width={300}
+                    height={60}
                   />
                   <Image
                     src={doingudBig.src}
                     alt="doingudBig"
-                    width={100}
-                    height={30}
+                    width={200}
+                    height={60}
                     style={{ transform: 'translateY(-1px)' }}
                   />
                 </div>
@@ -107,8 +107,8 @@ export default function Qr() {
                   <Image
                     alt="orbis"
                     src={orbisBig.src}
-                    width={80}
-                    height={30}
+                    width={160}
+                    height={60}
                   />
                 </div>
               </div>
