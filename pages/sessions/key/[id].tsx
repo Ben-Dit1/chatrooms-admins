@@ -57,47 +57,55 @@ export default function Qr() {
             alt="qrToMint"
           />
 
-          <div className="w-auto min-w-[80%] h-[50%] space-y-2 border-[#283040] border-4 rounded-3xl linear-card flex flex-col justify-between items-center text-white p-4">
+          <div className="w-auto max-w-[700px] min-w-[80%] h-[50%] space-y-2 border-[#283040] border-4 rounded-3xl linear-card flex flex-col justify-between items-center text-white p-4">
             <Image
               alt="chatroomsLogo"
               src={chatroomsLogo.src}
-              width={200}
+              width={250}
               height={250}
               style={{ marginBottom: '2px' }}
             />
             <div className="flex flex-col text-center justify-center items-center space-y-1">
-              <p className="text-xl font-medium">Engage with speakers</p>
-              <p className="font-medium text-sm">by asking and upvoting</p>
+              <p className="text-xl md:text-[4rem] font-medium">
+                Engage with speakers
+              </p>
+              <p className="font-medium md:text-[3rem] text-sm">
+                by asking and upvoting
+              </p>
             </div>
             <div className="p-2 rounded-lg border-[1px] border-white text-center">
-              <p className="text-sm">+100$ USDC GIVEAWAY* 🎉</p>
+              <p className="text-sm md:text-[3rem]">+100$ USDC GIVEAWAY* 🎉</p>
             </div>
             <div className="flex items-center justify-between w-[98%]">
               <div className="flex flex-col space-y-1 items-start">
-                <p className="text-[0.5rem] font-light">Developed by</p>
+                <p className="text-[0.5rem] md:text-[2rem] font-light">
+                  Developed by
+                </p>
                 <div className="flex items-center space-x-2 justify-start">
                   <Image
                     src={ethyleneBig.src}
                     alt="ethyleneBig"
-                    width={80}
+                    width={150}
                     height={30}
                   />
                   <Image
                     src={doingudBig.src}
                     alt="doingudBig"
-                    width={50}
+                    width={100}
                     height={30}
                     style={{ transform: 'translateY(-1px)' }}
                   />
                 </div>
               </div>
               <div className="flex flex-col space-y-1 items-center">
-                <p className="text-[0.5rem] font-light">Powered by</p>
+                <p className="text-[0.5rem] font-light md:text-[2rem]">
+                  Powered by
+                </p>
                 <div className="flex items-center">
                   <Image
                     alt="orbis"
                     src={orbisBig.src}
-                    width={50}
+                    width={80}
                     height={30}
                   />
                 </div>
