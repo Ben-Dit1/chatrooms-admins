@@ -102,7 +102,7 @@ export default function Qr() {
             className=" border-[1px] border-white text-sm p-2 rounded-lg absolute top-4 right-4 text-white"
             onClick={() => {
               navigator.clipboard.writeText(
-                `${ADMIN_ROOT}/${id}-${window.localStorage.getItem(
+                `${ADMIN_ROOT}/sessions/key/${id}-${window.localStorage.getItem(
                   'chatrooms',
                 )}`,
               );
