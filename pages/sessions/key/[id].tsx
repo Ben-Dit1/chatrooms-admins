@@ -50,14 +50,14 @@ export default function Qr() {
   if (h > w) {
     return (
       <>
-        <div className="bg w-full p-4 space-x-0 space-y-4 h-screen overflow-hidden min-h-fullscreen flex-col flex items-center justify-center z-10">
+        <div className="bg w-full p-4 space-x-0 space-y-4 lg:space-y-8 h-screen overflow-hidden min-h-fullscreen flex-col flex items-center justify-center z-10">
           <img
             className="w-auto h-[40%] rounded-3xl drop-shadow-xl shadow-sm shadow-gray-800"
             src={link}
             alt="qrToMint"
           />
 
-          <div className="w-auto max-w-[700px] min-w-[80%] h-[50%] space-y-2 border-[#283040] border-4 rounded-3xl linear-card flex flex-col justify-between items-center text-white p-4">
+          <div className="w-auto max-w-[700px] min-w-[80%] lg:h-[30%] h-[50%] space-y-2 border-[#283040] border-4 rounded-3xl linear-card flex flex-col justify-between items-center text-white p-4">
             <Image
               alt="chatroomsLogo"
               src={chatroomsLogo.src}
@@ -65,20 +65,22 @@ export default function Qr() {
               height={250}
               style={{ marginBottom: '2px' }}
             />
-            <div className="flex flex-col text-center justify-center items-center space-y-1">
-              <p className="text-xl md:text-[4rem] font-medium">
+            <div className="flex flex-col text-center justify-center items-center lg:space-y-10 space-y-1">
+              <p className="text-xl lg:text-[4rem] font-medium">
                 Engage with speakers
               </p>
-              <p className="font-medium md:text-[3rem] text-sm">
+              <p className="font-medium lg:text-[3rem] text-sm">
                 by asking and upvoting
               </p>
             </div>
             <div className="p-2 rounded-lg border-[1px] border-white text-center">
-              <p className="text-sm md:text-[3rem]">+100$ USDC GIVEAWAY* 🎉</p>
+              <p className="text-sm lg:text-[3rem] lg:px-10 py-6">
+                +100$ USDC GIVEAWAY* 🎉
+              </p>
             </div>
             <div className="flex items-center justify-between w-[98%]">
               <div className="flex flex-col space-y-1 items-start">
-                <p className="text-[0.5rem] md:text-[2rem] font-light">
+                <p className="text-[0.5rem] lg:text-[2rem] font-light">
                   Developed by
                 </p>
                 <div className="flex items-center space-x-2 justify-start">
@@ -98,7 +100,7 @@ export default function Qr() {
                 </div>
               </div>
               <div className="flex flex-col space-y-1 items-center">
-                <p className="text-[0.5rem] font-light md:text-[2rem]">
+                <p className="text-[0.5rem] font-light lg:text-[2rem]">
                   Powered by
                 </p>
                 <div className="flex items-center">
