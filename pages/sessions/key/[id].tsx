@@ -57,15 +57,15 @@ export default function Qr() {
             alt="qrToMint"
           />
 
-          <div className="w-auto max-w-[700px] min-w-[80%] lg:h-[30%] h-[50%] space-y-2 border-[#283040] border-4 rounded-3xl linear-card flex flex-col justify-between items-center text-white p-4">
+          <div className="w-auto max-w-[700px] min-w-[80%] lg:h-[36%] h-[50%] space-y-2 border-[#283040] border-4 rounded-3xl linear-card flex flex-col justify-between items-center text-white p-4">
             <Image
               alt="chatroomsLogo"
               src={chatroomsLogo.src}
-              width={250}
+              width={350}
               height={250}
               style={{ marginBottom: '2px' }}
             />
-            <div className="flex flex-col text-center justify-center items-center lg:space-y-10 space-y-1">
+            <div className="flex flex-col text-center justify-center items-center lg:space-y-14 space-y-1">
               <p className="text-xl lg:text-[4rem] font-medium">
                 Engage with speakers
               </p>
