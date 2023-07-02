@@ -4,6 +4,9 @@ import Axios, { AxiosResponse } from 'axios';
 const axios = Axios.create({
   baseURL: APIROOT,
 });
+const keyAxios = Axios.create({
+  baseURL: APIROOT,
+});
 const useAxios = () => {
   axios.interceptors.request.use(function (config) {
     config.headers.authorization = window.localStorage.getItem('chatrooms');
@@ -115,10 +118,24 @@ const useAxios = () => {
     });
   };
 
-  const createKey = async (sessionId: string): Promise<AxiosResponse<Key>> => {
-    const createKey = await axios.post('/key/generate', {
-      sessionId: Number(sessionId),
-    });
+  const createKey = async (
+    sessionId: string,
+    preSig?: string,
+  ): Promise<AxiosResponse<Key>> => {
+    console.log(preSig);
+    const createKey = await keyAxios.post(
+      '/key/generate',
+      {
+        sessionId: Number(sessionId),
+      },
+      {
+        headers: {
+          Authorization: preSig
+            ? preSig
+            : window.localStorage.getItem('chatrooms'),
+        },
+      },
+    );
     return createKey;
   };
 

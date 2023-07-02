@@ -15,7 +15,8 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     if (
       !window.localStorage.getItem('chatrooms') &&
-      route.pathname != '/login'
+      route.pathname != '/login' &&
+      route.pathname != '/sessions/key/[id]'
     ) {
       route.push('/login');
     }

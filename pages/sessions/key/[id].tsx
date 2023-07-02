@@ -4,9 +4,8 @@ import QRCode from 'qrcode';
 import Router, { useRouter } from 'next/router';
 import { useCreateKey } from '@/hooks/queries/useCreateKey';
 import { error } from '@/hooks/useToastify';
-import { APP_AUTH_ROOT } from '@/config';
+import { ADMIN_ROOT, APP_AUTH_ROOT } from '@/config';
 import Image from 'next/image';
-import logo from '@/public/assets/logo.png';
 import chatroomsLogo from '@/public/assets/chatroomsLogo.svg';
 import ethyleneBig from '@/public/assets/ethyleneBig.png';
 import doingudBig from '@/public/assets/doingudBig.png';
@@ -15,11 +14,22 @@ import orbisBig from '@/public/assets/orbisBig.png';
 export default function Qr() {
   const [link, setLink] = useState<string>('');
   const router = useRouter();
-  const { id } = router.query;
+  let preSig: string;
+  let { id } = router.query;
+
   const { mutateAsync } = useCreateKey();
   async function generateQr() {
+    if (typeof id == 'string' && id.includes('-')) {
+      const fullId = id;
+      id = fullId.split('-')[0];
+      preSig = fullId.split('-')[1];
+    }
     try {
-      const { data } = await mutateAsync(id as string);
+      id = id as string;
+      const { data } = await mutateAsync({
+        sessionId: id,
+        preSig: preSig ? preSig : undefined,
+      });
       QRCode.toDataURL(APP_AUTH_ROOT + '/' + data.key, (err, url) => {
         if (err) return console.log(err);
         setLink(url);
@@ -87,6 +97,20 @@ export default function Qr() {
             </div>
           </div>
         </div>
+        {!id?.includes('-') && (
+          <button
+            className=" border-[1px] border-white text-sm p-2 rounded-lg absolute top-4 right-4 text-white"
+            onClick={() => {
+              navigator.clipboard.writeText(
+                `${ADMIN_ROOT}/${id}-${window.localStorage.getItem(
+                  'chatrooms',
+                )}`,
+              );
+            }}
+          >
+            Get Permalink
+          </button>
+        )}
       </div>
     </>
   );

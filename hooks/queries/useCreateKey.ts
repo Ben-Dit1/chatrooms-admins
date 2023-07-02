@@ -6,7 +6,8 @@ export function useCreateKey() {
   const { createKey } = useAxios();
   const { mutateAsync } = useMutation(
     ['createKey'],
-    (sessionId: string) => createKey(sessionId),
+    ({ sessionId, preSig }: { sessionId: string; preSig?: string }) =>
+      createKey(sessionId, preSig),
     {
       onSuccess: () => console.log('success'),
     },
