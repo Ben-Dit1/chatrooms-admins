@@ -22,6 +22,15 @@ const useAxios = () => {
     return managerAddress;
   };
 
+  const findSessionById = async (
+    sessionId: string,
+  ): Promise<AxiosResponse<Session>> => {
+    const session = await axios.get('/session/findById', {
+      params: { id: sessionId },
+    });
+    return session;
+  };
+
   const findOrganizationById = async (
     id: string,
   ): Promise<AxiosResponse<Organization>> => {
@@ -152,6 +161,7 @@ const useAxios = () => {
     findOrganizationsBySignature,
     adminOrManager,
     findOrganizationById,
+    findSessionById,
   };
 };
 

@@ -11,6 +11,7 @@ import ethyleneBig from '@/public/assets/ethyleneBig.png';
 import doingudBig from '@/public/assets/doingudBig.png';
 import orbisBig from '@/public/assets/orbisBig.png';
 import useWindowSize from '@/hooks/useWindowSize';
+import { useGetSessionById } from '@/hooks/queries/useGetSessionById';
 
 export default function Qr() {
   const [link, setLink] = useState<string>('');
@@ -19,6 +20,7 @@ export default function Qr() {
   let { id } = router.query;
   const [w, h] = useWindowSize();
   const { mutateAsync } = useCreateKey();
+  const { data } = useGetSessionById(id as string);
   async function generateQr() {
     if (typeof id == 'string' && id.includes('-')) {
       const fullId = id;
@@ -57,7 +59,7 @@ export default function Qr() {
             alt="qrToMint"
           />
 
-          <div className="w-auto max-w-[700px] min-w-[80%] lg:h-[36%] h-[50%] space-y-2 border-[#283040] border-4 rounded-3xl linear-card flex flex-col justify-between items-center text-white p-4">
+          <div className="w-auto max-w-[800px] min-w-[84%] lg:h-[36%] h-[50%] space-y-2 border-[#283040] border-4 rounded-3xl linear-card flex flex-col justify-between items-center text-white p-6">
             <Image
               alt="chatroomsLogo"
               src={chatroomsLogo.src}
@@ -73,27 +75,28 @@ export default function Qr() {
                 by asking and upvoting
               </p>
             </div>
+            {data && <p className="text-[2rem]">{data.data.name}</p>}
             <div className="p-2 rounded-lg border-[1px] border-white text-center">
               <p className="text-sm lg:text-[3rem] lg:px-10 py-6">
                 +100$ USDC GIVEAWAY* 🎉
               </p>
             </div>
-            <div className="flex items-center justify-between w-[98%]">
+            <div className="flex items-center justify-between w-[98%] px-10">
               <div className="flex flex-col space-y-1 items-start">
                 <p className="text-[0.5rem] lg:text-[2rem] font-light">
                   Developed by
                 </p>
-                <div className="flex items-center space-x-2 lg:space-x-4 justify-start">
+                <div className="flex items-center space-x-2 lg:space-x-10 justify-start">
                   <Image
                     src={ethyleneBig.src}
                     alt="ethyleneBig"
-                    width={300}
+                    width={260}
                     height={60}
                   />
                   <Image
                     src={doingudBig.src}
                     alt="doingudBig"
-                    width={200}
+                    width={180}
                     height={60}
                     style={{ transform: 'translateY(-2px)' }}
                   />
@@ -107,7 +110,7 @@ export default function Qr() {
                   <Image
                     alt="orbis"
                     src={orbisBig.src}
-                    width={160}
+                    width={140}
                     height={60}
                   />
                 </div>
