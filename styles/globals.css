@@ -15,10 +15,11 @@ body,
 }
 
 .linear-card {
+  background: rgb(255, 255, 255);
   background: linear-gradient(
-    90deg,
-    rgba(23, 27, 40, 1) 0%,
-    rgba(24, 30, 45, 1) 50%
+    0deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.02) 50%
   );
 }
 
@@ -27,5 +28,14 @@ body,
     90deg,
     rgba(12, 14, 21, 1) 0%,
     rgba(22, 29, 44, 1) 50%
+  );
+}
+
+.bg-green-grad {
+  background: rgb(25, 35, 26);
+  background: linear-gradient(
+    90deg,
+    rgba(25, 35, 26, 1) 0%,
+    rgba(34, 51, 35, 1) 50%
   );
 }

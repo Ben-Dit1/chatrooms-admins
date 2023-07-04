@@ -7,11 +7,13 @@ import { error } from '@/hooks/useToastify';
 import { ADMIN_ROOT, APP_AUTH_ROOT } from '@/config';
 import Image from 'next/image';
 import chatroomsLogo from '@/public/assets/chatroomsLogo.svg';
+import barcaLogo from '@/public/assets/logo.png';
 import ethyleneBig from '@/public/assets/ethyleneBig.png';
 import doingudBig from '@/public/assets/doingudBig.png';
 import orbisBig from '@/public/assets/orbisBig.png';
 import useWindowSize from '@/hooks/useWindowSize';
 import { useGetSessionById } from '@/hooks/queries/useGetSessionById';
+import { MdOutlineLightMode } from 'react-icons/md';
 
 export default function Qr() {
   const [link, setLink] = useState<string>('');
@@ -21,6 +23,7 @@ export default function Qr() {
   const [w, h] = useWindowSize();
   const { mutateAsync } = useCreateKey();
   const { data } = useGetSessionById(id as string);
+  const [isGreen, setIsGreen] = useState(false);
   async function generateQr() {
     if (typeof id == 'string' && id.includes('-')) {
       const fullId = id;
@@ -52,20 +55,28 @@ export default function Qr() {
   if (h > w) {
     return (
       <>
-        <div className="bg w-full p-4 space-x-0 space-y-4 lg:space-y-8 h-screen overflow-hidden min-h-fullscreen flex-col flex items-center justify-center z-10">
+        <div
+          className={`${
+            isGreen ? 'bg-green-grad' : 'bg'
+          } bg w-full p-4 space-x-0 space-y-4 lg:space-y-12 h-screen overflow-hidden min-h-fullscreen flex-col flex items-center justify-center z-10`}
+        >
           <img
             className="w-auto h-[40%] rounded-3xl drop-shadow-xl shadow-sm shadow-gray-800"
             src={link}
             alt="qrToMint"
           />
 
-          <div className="w-auto max-w-[800px] min-w-[84%] lg:h-[36%] h-[50%] space-y-2 border-[#283040] border-4 rounded-3xl linear-card flex flex-col justify-between items-center text-white p-6">
+          <div className="w-auto max-w-[900px] backdrop:blur-xl min-w-[94%] lg:h-[46%] h-[50%] space-y-2 border-[#283040] border-4 rounded-[30px] linear-card flex flex-col justify-between items-center text-white p-6">
             <Image
               alt="chatroomsLogo"
               src={chatroomsLogo.src}
               width={350}
               height={250}
-              style={{ marginBottom: '2px' }}
+              style={{
+                marginBottom: '2px',
+                paddingTop: '14px',
+                transform: 'translateY(8px)',
+              }}
             />
             <div className="flex flex-col text-center justify-center items-center lg:space-y-14 space-y-1">
               <p className="text-xl lg:text-[4rem] font-medium">
@@ -76,16 +87,29 @@ export default function Qr() {
               </p>
             </div>
             {data && (
-              <p className="text-[2rem] text-center text-white">
-                {data.data.name}
-              </p>
+              <div>
+                <p
+                  className={`${
+                    isGreen ? 'text-[#F6C24D]' : 'text-[#CBA1A4]'
+                  } text-center font-medium text-[2.8rem]`}
+                >
+                  Presentation
+                </p>
+                <p className="text-[3rem] text-center text-white">
+                  {data.data.name}
+                </p>
+              </div>
             )}
-            <div className="p-2 rounded-lg border-[1px] border-white text-center">
+            <div
+              className={`p-2 px-4 rounded-2xl border-[3px] ${
+                isGreen ? 'border-[#F6C24D]' : 'border-[#CBA1A4]'
+              }  text-center`}
+            >
               <p className="text-sm lg:text-[3rem] lg:px-10 py-6">
-                +100$ USDC GIVEAWAY* 🎉
+                +100$ USDC GIVEAWAY 🎉
               </p>
             </div>
-            <div className="flex items-center justify-between w-[98%] px-10">
+            <div className="flex items-center justify-between w-[98%] px-4">
               <div className="flex flex-col space-y-1 items-start">
                 <p className="text-[0.5rem] lg:text-[2rem] font-light">
                   Developed by
@@ -106,7 +130,7 @@ export default function Qr() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col space-y-1 items-center">
+              <div className="flex flex-col space-y-1 items-center -translate-y-[8px]">
                 <p className="text-[0.5rem] font-light lg:text-[2rem]">
                   Powered by
                 </p>
@@ -123,7 +147,7 @@ export default function Qr() {
           </div>
           {!id?.includes('-') && (
             <button
-              className=" border-[1px] border-white text-sm p-2 rounded-lg absolute top-4 right-4 text-white"
+              className=" border-[1px] border-white text-sm p-2 rounded-lg absolute top-4 right-16 text-white"
               onClick={() => {
                 navigator.clipboard.writeText(
                   `${ADMIN_ROOT}/sessions/key/${id}-${window.localStorage.getItem(
@@ -135,6 +159,14 @@ export default function Qr() {
               Get Permalink
             </button>
           )}
+          <button
+            onClick={() => {
+              setIsGreen((prev) => !prev);
+            }}
+            className="absolute top-6 right-6 text-white"
+          >
+            <MdOutlineLightMode size={30} />
+          </button>
         </div>
       </>
     );
