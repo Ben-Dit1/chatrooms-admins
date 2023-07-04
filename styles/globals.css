@@ -23,6 +23,9 @@ body,
   );
 }
 
+.bg-border {
+}
+
 .bg {
   background: linear-gradient(
     90deg,

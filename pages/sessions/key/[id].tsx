@@ -66,7 +66,7 @@ export default function Qr() {
             alt="qrToMint"
           />
 
-          <div className="w-auto max-w-[900px] backdrop:blur-xl min-w-[94%] lg:h-[46%] h-[50%] space-y-2 border-[#283040] border-4 rounded-[30px] linear-card flex flex-col justify-between items-center text-white p-6">
+          <div className="w-auto max-w-[900px] backdrop:blur-xl min-w-[94%] lg:h-[46%] h-[50%] space-y-2 border-[rgba(54,69,79,0.4)] border-4 rounded-[30px] linear-card flex flex-col justify-between items-center text-white p-6">
             <Image
               alt="chatroomsLogo"
               src={chatroomsLogo.src}
