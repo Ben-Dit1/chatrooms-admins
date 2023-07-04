@@ -75,7 +75,11 @@ export default function Qr() {
                 by asking and upvoting
               </p>
             </div>
-            {data && <p className="text-[2rem] text-white">{data.data.name}</p>}
+            {data && (
+              <p className="text-[2rem] text-center text-white">
+                {data.data.name}
+              </p>
+            )}
             <div className="p-2 rounded-lg border-[1px] border-white text-center">
               <p className="text-sm lg:text-[3rem] lg:px-10 py-6">
                 +100$ USDC GIVEAWAY* 🎉
