@@ -159,6 +159,9 @@ export default function Qr() {
             <p className="text-3xl font-medium">Engage with speakers</p>
             <p className="text-xl font-medium">by asking and upvoting</p>
           </div>
+          {data && (
+            <p className="text-xl text-center text-white">{data.data.name}</p>
+          )}
           <div className="px-4 py-2 rounded-lg border-[1px] border-white text-center">
             <p className="text-lg">+100$ USDC GIVEAWAY* 🎉</p>
           </div>
