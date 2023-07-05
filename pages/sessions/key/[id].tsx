@@ -66,23 +66,18 @@ export default function Qr() {
             alt="qrToMint"
           />
 
-          <div className="w-auto max-w-[900px] backdrop:blur-xl min-w-[94%] lg:h-[46%] h-[50%] space-y-2 border-[rgba(54,69,79,0.4)] border-4 rounded-[30px] linear-card flex flex-col justify-between items-center text-white p-6">
+          <div className="w-auto max-w-[900px] backdrop:blur-xl min-w-[94%] lg:h-[46%] h-[50%] space-y-2 border-[rgba(54,69,79,0.4)] border-4 rounded-[30px] linear-card flex flex-col justify-around items-center text-white p-6">
             <Image
               alt="chatroomsLogo"
               src={chatroomsLogo.src}
               width={350}
               height={250}
-              style={{
-                marginBottom: '2px',
-                paddingTop: '14px',
-                transform: 'translateY(8px)',
-              }}
             />
-            <div className="flex flex-col text-center justify-center items-center lg:space-y-14 space-y-1">
-              <p className="text-xl lg:text-[4rem] font-medium">
+            <div className="text-center">
+              <p className="text-[3.25rem] font-medium leading-[1.3em]">
                 Engage with speakers
               </p>
-              <p className="font-medium lg:text-[3rem] text-sm">
+              <p className="font-medium text-[2.75rem] leading-[1.3em]">
                 by asking and upvoting
               </p>
             </div>
@@ -91,21 +86,21 @@ export default function Qr() {
                 <p
                   className={`${
                     isGreen ? 'text-[#F6C24D]' : 'text-[#CBA1A4]'
-                  } text-center font-medium text-[2.8rem]`}
+                  } text-center font-medium text-[2.25rem]`}
                 >
                   Presentation
                 </p>
-                <p className="text-[3rem] text-center text-white">
+                <p className="text-[2.75rem] text-center text-white capitalize">
                   {data.data.name}
                 </p>
               </div>
             )}
             <div
-              className={`p-2 px-4 rounded-2xl border-[3px] ${
+              className={`rounded-2xl border-[3px] ${
                 isGreen ? 'border-[#F6C24D]' : 'border-[#CBA1A4]'
               }  text-center`}
             >
-              <p className="text-sm lg:text-[3rem] lg:px-10 py-6">
+              <p className="text-[2.25rem] py-5 px-6">
                 +100$ USDC GIVEAWAY 🎉
               </p>
             </div>
@@ -192,7 +187,7 @@ export default function Qr() {
             <p className="text-xl font-medium">by asking and upvoting</p>
           </div>
           {data && (
-            <p className="text-xl text-center text-white">{data.data.name}</p>
+            <p className="text-xl text-center text-white capitalize">{data.data.name}</p>
           )}
           <div className="px-4 py-2 rounded-lg border-[1px] border-white text-center">
             <p className="text-lg">+100$ USDC GIVEAWAY* 🎉</p>
