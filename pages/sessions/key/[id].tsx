@@ -74,10 +74,10 @@ export default function Qr() {
               height={250}
             />
             <div className="text-center">
-              <p className="text-[3.5rem] font-medium leading-[1.3em]">
+              <p className="text-[3.25rem] font-medium leading-[1.3em]">
                 Engage with speakers
               </p>
-              <p className="font-medium text-[3rem] leading-[1.3em]">
+              <p className="font-medium text-[2.75rem] leading-[1.3em]">
                 by asking and upvoting
               </p>
             </div>
@@ -86,7 +86,7 @@ export default function Qr() {
                 <p
                   className={`${
                     isGreen ? 'text-[#F6C24D]' : 'text-[#CBA1A4]'
-                  } text-center font-medium text-[2.5rem]`}
+                  } text-center font-medium text-[2.25rem]`}
                 >
                   Presentation
                 </p>
@@ -96,11 +96,11 @@ export default function Qr() {
               </div>
             )}
             <div
-              className={`p-2 px-4 rounded-2xl border-[3px] ${
+              className={`rounded-2xl border-[3px] ${
                 isGreen ? 'border-[#F6C24D]' : 'border-[#CBA1A4]'
               }  text-center`}
             >
-              <p className="text-[2.25rem] p-5">
+              <p className="text-[2.25rem] py-5 px-6">
                 +100$ USDC GIVEAWAY 🎉
               </p>
             </div>
